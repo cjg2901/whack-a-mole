@@ -6,6 +6,9 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class WAMClient {
     /** The socket connected to the server */
     private Socket socket;
@@ -49,6 +52,9 @@ public class WAMClient {
         socket.close();
     }
 
+    /**
+     *
+     */
     public void run() {
         String request = "";
         while(true) {
@@ -68,6 +74,11 @@ public class WAMClient {
         }
     }
 
+    /**
+     *
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         if (args.length != 2) {
             System.out.println(
