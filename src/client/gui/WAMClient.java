@@ -51,11 +51,20 @@ public class WAMClient {
 
     public void run() {
         String request = "";
-        request = read();
-        String[] tokens = request.split(" ");
-        switch(tokens[0]) {
-            case WAMProtocol.WELCOME:
-                System.out.println(request);
+        while(true) {
+            request = read();
+            String[] tokens = request.split(" ");
+            switch (tokens[0]) {
+                case WAMProtocol.WELCOME:
+                    System.out.println(request);
+                    break;
+                case WAMProtocol.MOLE_UP:
+                    System.out.println(request);
+                    break;
+                case WAMProtocol.MOLE_DOWN:
+                    System.out.println(request);
+                    break;
+            }
         }
     }
 
