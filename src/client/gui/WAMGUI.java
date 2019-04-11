@@ -1,4 +1,6 @@
 package client.gui;
 
-public class WAMGUI {
+public class WAMGUI
+{
+
 }
