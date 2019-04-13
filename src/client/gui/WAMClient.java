@@ -1,6 +1,7 @@
 package client.gui;
 
 import common.WAMProtocol;
+import common.WAMException;
 
 import java.io.*;
 import java.net.*;
@@ -13,6 +14,10 @@ import static common.WAMProtocol.*;
  *
  */
 public class WAMClient {
+
+    /** Turn on if standard output debug messages are desired. */
+    private static final boolean DEBUG = false;
+
     /** client socket to communicate with server */
     private Socket clientSocket;
     /** used to read requests from the server */
@@ -21,6 +26,19 @@ public class WAMClient {
     private PrintStream networkOut;
     /** the model which keeps track of the game */
     private WAMBoard board;
+
+    /**
+     * Print method that does something only if DEBUG is true
+     *
+     * @param logMsg the message to log
+     */
+    private static void dPrint( Object logMsg )
+    {
+        if ( WAMClient.DEBUG )
+        {
+            System.out.println( logMsg );
+        }
+    }
 
     public String arguments;
 
@@ -35,13 +53,27 @@ public class WAMClient {
         this.go = false;
     }
 
-    public WAMClient (String host, int port, WAMBoard board) throws IOException {
-        this.clientSocket = new Socket(host, port);
-        this.networkIn = new Scanner(clientSocket.getInputStream());
-        this.networkOut = new PrintStream(clientSocket.getOutputStream());
-        this.board = board;
-        String request = this.networkIn.next();
-        this.arguments = this.networkIn.nextLine();
+    public WAMClient (String host, int port, WAMBoard board) throws WAMException {
+        try
+        {
+            this.clientSocket = new Socket(host, port);
+            this.networkIn = new Scanner(clientSocket.getInputStream());
+            this.networkOut = new PrintStream(clientSocket.getOutputStream());
+            this.board = board;
+
+            //block waiting for welcome message from server
+            String request = this.networkIn.next();
+            this.arguments = this.networkIn.nextLine();
+            if(!request.equals(WELCOME))
+            {
+                throw new WAMException("Expected CONNECT from server");
+            }
+            WAMClient.dPrint("Connected to server " + this.clientSocket);
+        }
+        catch(IOException e)
+        {
+            throw new WAMException(e);
+        }
     }
 
     public void error( String arguments ) {
@@ -149,19 +181,17 @@ public class WAMClient {
         //handles whacking sends a whack
     }
 
-    /**
-    public static void main(String[] args) throws IOException {
-        if (args.length != 2) {
-            System.out.println(
-                    "Usage: java ConnectFourClient hostname port");
-            System.exit(1);
-        }
+//    public static void main(String[] args) throws IOException {
+//        if (args.length != 2) {
+//            System.out.println(
+//                    "Usage: java ConnectFourClient hostname port");
+//            System.exit(1);
+//        }
+//
+//        String hostname = args[0];
+//        int port = Integer.parseInt(args[1]);
+//        WAMClient client = new WAMClient(hostname, port, this.board);
+//        client.run();
+//    }
 
-        String hostname = args[0];
-        int port = Integer.parseInt(args[1]);
-        Socket server = new Socket(hostname, port);
-        WAMClient client = new WAMClient(server);
-        client.run();
-    }
-    */
 }
