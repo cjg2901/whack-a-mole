@@ -4,57 +4,90 @@ import common.WAMProtocol;
 
 import java.io.*;
 import java.net.*;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import static common.WAMProtocol.*;
 
 /**
  *
  */
 public class WAMClient {
-    /** The socket connected to the server */
-    private Socket socket;
-    /** Input from the server */
-    private Scanner in;
-    /** Output to the server */
-    private PrintWriter out;
+    /** client socket to communicate with server */
+    private Socket clientSocket;
+    /** used to read requests from the server */
+    private Scanner networkIn;
+    /** Used to write responses to the server. */
+    private PrintStream networkOut;
+    /** the model which keeps track of the game */
+    private WAMBoard board;
 
-    public WAMClient (Socket sock) throws IOException {
-        socket = sock;
-        in = new Scanner(socket.getInputStream());
-        out = new PrintWriter(socket.getOutputStream());
+    /** sentinel loop used to control the main loop */
+    private boolean go;
+
+    private synchronized boolean goodToGo() {
+        return this.go;
+    }
+
+    private synchronized void stop() {
+        this.go = false;
+    }
+
+    public WAMClient (String host, int port, WAMBoard board) throws IOException {
+        this.clientSocket = new Socket(host, port);
+        this.networkIn = new Scanner(clientSocket.getInputStream());
+        this.networkOut = new PrintStream(clientSocket.getOutputStream());
+        this.board = board;
+        String request = this.networkIn.next();
+        String arguments = this.networkIn.nextLine();
+    }
+
+    public void error( String arguments ) {
+        this.board.Error( arguments );
+        this.stop();
     }
 
     /**
-     * Reads the next line from the server
-     *
-     * @return the next line
+     * Called from the GUI when it is ready to start receiving messages
+     * from the server.
      */
-    public String read() {
-        return in.nextLine();
+    public void startListener() {
+        new Thread(() -> this.run()).start();
+    }
+
+    public void moleUp( String arguments ) {
+
+        //String[] fields = arguments.trim().split( " " );
+        //int column = Integer.parseInt(fields[0]);
+
+        // Update the board model.
+        this.board.moleUp();
+    }
+
+    public void moleDown( String arguments ) {
+
+        //String[] fields = arguments.trim().split( " " );
+        //int column = Integer.parseInt(fields[0]);
+
+        // Update the board model.
+        this.board.moleDown();
     }
 
     /**
-     * Sends a message to the server
      *
-     * @param message the String to be sent
      */
-    public void send(String message) {
-        out.println(message);
-        out.flush();
+    public void close() {
+        try {
+            this.clientSocket.close();
+        }
+        catch( IOException ioe ) {
+            // squash
+        }
+        this.board.close();
     }
 
     /**
-     * Closes the socket
-     *
-     * @param socket the socket to be closed
-     * @throws IOException
-     */
-    public void close(Socket socket) throws IOException {
-        socket.close();
-    }
 
-    /**
-     *
-     */
     public void run() {
         String request = "";
         while(true) {
@@ -73,12 +106,43 @@ public class WAMClient {
             }
         }
     }
+     */
+    private void run() {
+        while (this.goodToGo()) {
+            try {
+                String request = this.networkIn.next();
+                String arguments = this.networkIn.nextLine().trim();
+
+                switch ( request ) {
+                    case MOLE_UP:
+                        moleUp(arguments);
+                        break;
+                    case MOLE_DOWN:
+                        moleDown( arguments );
+                        break;
+                    case ERROR:
+                        error( arguments );
+                        break;
+                    default:
+                        System.err.println("Unrecognized request: " + request);
+                        this.stop();
+                        break;
+                }
+            }
+            catch( NoSuchElementException nse ) {
+                // Looks like the connection shut down.
+                this.error( "Lost connection to server." );
+                this.stop();
+            }
+            catch( Exception e ) {
+                this.error( e.getMessage() + '?' );
+                this.stop();
+            }
+        }
+        this.close();
+    }
 
     /**
-     *
-     * @param args
-     * @throws IOException
-     */
     public static void main(String[] args) throws IOException {
         if (args.length != 2) {
             System.out.println(
@@ -92,4 +156,5 @@ public class WAMClient {
         WAMClient client = new WAMClient(server);
         client.run();
     }
+    */
 }
