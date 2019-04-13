@@ -1,11 +1,16 @@
 package client.gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.net.Socket;
 import java.util.List;
 
 /**
@@ -23,7 +28,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     private int Cols;
     private int duration;
     private int players;
-    Button[][] boardarray = new Button[Rows][Cols];
+    Button[][] boardarray;
 
     @Override
     public void init()
@@ -32,20 +37,24 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         {
             List<String> args = getParameters().getRaw();
 
-            int port = Integer.parseInt(args.get(0));
-            this.Rows = Integer.parseInt(args.get(1));
-            this.Cols = Integer.parseInt(args.get(2));
-            this.players = Integer.parseInt(args.get(3));
-            this.duration = Integer.parseInt(args.get(4));
+            String host = args.get(0);
+            int port = Integer.parseInt(args.get(1));
 
             this.board = new WAMBoard(this.Rows, this.Cols, this.players);
             this.board.addObserver(this);
 
             this.MOLE_DOWN = new Image("client.gui/WAM-logo.png");
             this.MOLE_UP = new Image("client.gui/WAM-mole.png");
-            //needs some work regarding hostname
-            Socket Sock = new Socket();
-            //this.client = new WAMClient();
+            this.client = new WAMClient(host, port, this.board);
+
+            String arguments = client.arguments;
+            String[] gameinfo = arguments.split(" ");
+            this.Rows = Integer.parseInt(gameinfo[0]);
+            this.Cols = Integer.parseInt(gameinfo[1]);
+            this.players = Integer.parseInt(gameinfo[2]);
+            this.duration = Integer.parseInt(gameinfo[3]);
+
+            this.boardarray = new Button[Rows][Cols];
 
         }
         catch (Exception e)
@@ -57,28 +66,66 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     @Override
     public void start(Stage stage) throws Exception
     {
+        BorderPane borderpane = new BorderPane();
+        GridPane pane = new GridPane();
+        for(int i = 0; i < Rows; i++)
+        {
+            for(int j = 0; j < Cols; j++)
+            {
+                boardarray[i][j] = new Button();
+                boardarray[i][j].setOnAction(e -> client.Whack());
+                boardarray[i][j].setGraphic(new ImageView(this.MOLE_DOWN));
+                pane.add(boardarray[i][j], i, j);
+            }
+        }
+        Label header = new Label();
+        header.setText("\t\t\t\t\t\t\tWELCOME TO Whack A Mole");
+        borderpane.setTop(header);
+        borderpane.setCenter(pane);
 
+        Scene scene = new Scene(borderpane);
+        stage.setScene(scene);
+        stage.setTitle("ConnectFourGUI");
+
+        stage.show();
+
+        this.client.startListener();
     }
 
     @Override
     public void stop()
     {
-
+        this.client.close();
     }
 
     private void refresh()
     {
-
+        //does stuff
     }
 
     @Override
     public void update(WAMBoard wamBoard)
     {
-
+        if ( Platform.isFxApplicationThread() )
+        {
+            this.refresh();
+        }
+        else
+        {
+            Platform.runLater(this::refresh);
+        }
     }
 
     public static void main(String[] args)
     {
-
+        if (args.length != 2)
+        {
+            System.out.println("Usage: java ConnectFourGUI host port");
+            System.exit(-1);
+        }
+        else
+        {
+            Application.launch(args);
+        }
     }
 }

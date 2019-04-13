@@ -22,6 +22,8 @@ public class WAMClient {
     /** the model which keeps track of the game */
     private WAMBoard board;
 
+    public String arguments;
+
     /** sentinel loop used to control the main loop */
     private boolean go;
 
@@ -39,7 +41,7 @@ public class WAMClient {
         this.networkOut = new PrintStream(clientSocket.getOutputStream());
         this.board = board;
         String request = this.networkIn.next();
-        String arguments = this.networkIn.nextLine();
+        this.arguments = this.networkIn.nextLine();
     }
 
     public void error( String arguments ) {
@@ -140,6 +142,11 @@ public class WAMClient {
             }
         }
         this.close();
+    }
+
+    public void Whack()
+    {
+        //handles whacking sends a whack
     }
 
     /**
