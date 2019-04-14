@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import static common.WAMProtocol.*;
+import static java.lang.Math.*;
 
 /**
  *
@@ -94,8 +95,11 @@ public class WAMClient {
         String[] fields = arguments.trim().split( " " );
         int moleNumber = Integer.parseInt(fields[0]);
 
+        int row = (int) floor((double) moleNumber / (double) board.COLS) + 1;
+        int col = (moleNumber % board.COLS) + 1;
+
         // Update the board model.
-        this.board.moleUp(moleNumber);
+        this.board.moleUp(row, col);
     }
 
     public void moleDown( String arguments ) {
@@ -103,8 +107,11 @@ public class WAMClient {
         String[] fields = arguments.trim().split( " " );
         int moleNumber = Integer.parseInt(fields[0]);
 
+        int row = (int) floor((double) moleNumber / (double) board.COLS) + 1;
+        int col = (moleNumber % board.COLS) + 1;
+
         // Update the board model.
-        this.board.moleDown(moleNumber);
+        this.board.moleDown(row, col);
     }
 
     /**
@@ -193,5 +200,6 @@ public class WAMClient {
 //        WAMClient client = new WAMClient(hostname, port, this.board);
 //        client.run();
 //    }
+
 
 }
