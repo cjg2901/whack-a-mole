@@ -1,5 +1,6 @@
 package client.gui;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class WAMBoard
     private Status status;
 
     /**
-     * constructor ...(takes in number of rows and columns and number of players)
+     * constructor
      */
 
     public WAMBoard(int rows, int cols, int players)
@@ -37,7 +38,7 @@ public class WAMBoard
         this.COLS = cols;
         this.Players = players;
         this.status = Status.NOT_OVER;
-
+        this.observers = new LinkedList<>();
     }
 
     /**
@@ -57,7 +58,8 @@ public class WAMBoard
         @Override
         public String toString()
         {
-            return super.toString() + this.message == null ? "" : ( '(' + this.message + ')' );
+            super.toString();
+            return '(' + this.message + ')';
         }
     }
 

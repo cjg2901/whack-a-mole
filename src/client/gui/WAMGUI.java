@@ -23,6 +23,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     private WAMBoard board;
     private Image MOLE_DOWN;
     private Image MOLE_UP;
+    private Image Background;
     private WAMClient client;
     private int Rows;
     private int Cols;
@@ -43,16 +44,17 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
             this.board = new WAMBoard(this.Rows, this.Cols, this.players);
             this.board.addObserver(this);
 
-            this.MOLE_DOWN = new Image("client.gui/WAM-logo.png");
-            this.MOLE_UP = new Image("client.gui/WAM-mole.png");
+            this.MOLE_DOWN = new Image("client/gui/WAM-logo.png");
+            this.MOLE_UP = new Image("client/gui/WAM-mole.png");
+            this.Background = new Image("client/gui/WAM-bg.png");
             this.client = new WAMClient(host, port, this.board);
 
             String arguments = client.arguments;
             String[] gameinfo = arguments.split(" ");
-            this.Rows = Integer.parseInt(gameinfo[0]);
-            this.Cols = Integer.parseInt(gameinfo[1]);
-            this.players = Integer.parseInt(gameinfo[2]);
-            this.duration = Integer.parseInt(gameinfo[3]);
+            this.Rows = Integer.parseInt(gameinfo[1]);
+            this.Cols = Integer.parseInt(gameinfo[2]);
+            this.players = Integer.parseInt(gameinfo[3]);
+            this.duration = Integer.parseInt(gameinfo[4]);
 
             this.boardarray = new Button[Rows][Cols];
 
@@ -79,7 +81,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
             }
         }
         Label header = new Label();
-        header.setText("\t\t\t\t\t\t\tWelcome to Whack A Mole");
+        header.setText("\t\t\tWelcome to Whack A Mole");
         borderpane.setTop(header);
         borderpane.setCenter(pane);
 
