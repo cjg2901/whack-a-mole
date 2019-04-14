@@ -92,19 +92,19 @@ public class WAMClient {
     public void moleUp( String arguments ) {
 
         String[] fields = arguments.trim().split( " " );
-        int number = Integer.parseInt(fields[0]);
+        int moleNumber = Integer.parseInt(fields[0]);
 
         // Update the board model.
-        this.board.moleUp(number);
+        this.board.moleUp(moleNumber);
     }
 
     public void moleDown( String arguments ) {
 
         String[] fields = arguments.trim().split( " " );
-        int number = Integer.parseInt(fields[0]);
+        int moleNumber = Integer.parseInt(fields[0]);
 
         // Update the board model.
-        this.board.moleDown(number);
+        this.board.moleDown(moleNumber);
     }
 
     /**
