@@ -78,9 +78,9 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     {
         BorderPane borderpane = new BorderPane();
         pane = new GridPane();
-        for(int i = 0; i < Rows; i++)
+        for(int i = 0; i < Cols; i++)
         {
-            for(int j = 0; j < Cols; j++)
+            for(int j = 0; j < Rows; j++)
             {
                 boardarray[i][j] = new Button();
                 boardarray[i][j].setOnAction(e -> client.Whack());
@@ -136,10 +136,10 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
 
     private void help_refresh()
     {
-        for(int i = 0; i < Rows; i++)
+        for(int i = 0; i < Cols; i++)
         {
             System.out.println("HI");
-            for(int j = 0; j < Cols; j++)
+            for(int j = 0; j < Rows; j++)
             {
                 System.out.println("I'm here");
                 WAMBoard.Mole mole = board.getContents(i,j);
