@@ -64,7 +64,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
             this.board.addObserver(this);
 
 
-            this.boardarray = new Button[Rows][Cols];
+            this.boardarray = new Button[Cols][Rows];
 
         }
         catch (WAMException wame)
