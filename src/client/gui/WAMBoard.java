@@ -52,11 +52,11 @@ public class WAMBoard
         this.status = Status.NOT_OVER;
         this.observers = new LinkedList<>();
 
-        for(int row=0; row<ROWS; row++)
+        for(int col=0; col<COLS; col++)
         {
-            for(int col=0; col < COLS; col++)
+            for(int row=0; row < ROWS; row++)
             {
-                board[row][col] = Mole.MOLE_DOWN;
+                board[col][row] = Mole.MOLE_DOWN;
             }
         }
     }
