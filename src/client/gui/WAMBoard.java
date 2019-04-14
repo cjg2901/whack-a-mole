@@ -10,6 +10,18 @@ import java.util.List;
  */
 public class WAMBoard
 {
+
+    /**
+     * Used to keep track of the Mole status on the board
+     */
+    public enum Mole
+    {
+        MOLE_UP, MOLE_DOWN, NONE
+    }
+
+    /** the board */
+    private Mole[][] board;
+
     /**
      * useful variables
      */
@@ -31,14 +43,22 @@ public class WAMBoard
     /**
      * constructor
      */
-
     public WAMBoard(int rows, int cols, int players)
     {
         this.ROWS = rows;
         this.COLS = cols;
+        this.board = new Mole[rows][cols];
         this.Players = players;
         this.status = Status.NOT_OVER;
         this.observers = new LinkedList<>();
+
+        for(int row=0; row<ROWS; row++)
+        {
+            for(int col=0; col < COLS; col++)
+            {
+                board[col][row] = Mole.NONE;
+            }
+        }
     }
 
     /**
@@ -162,5 +182,16 @@ public class WAMBoard
     public void Score(String score)
     {
         this.Score = score;
+    }
+
+    /**
+     * What is at this square?
+     * @param row row number of square
+     * @param col column number of square
+     * @return the player (or {@link Mole#NONE}) at the given location
+     */
+    public Mole getContents(int row, int col)
+    {
+        return this.board[col][row];
     }
 }
