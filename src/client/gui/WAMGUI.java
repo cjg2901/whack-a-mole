@@ -2,6 +2,7 @@ package client.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,6 +31,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     private int duration;
     private int players;
     Button[][] boardarray;
+    GridPane pane;
 
     @Override
     public void init()
@@ -69,7 +71,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     public void start(Stage stage) throws Exception
     {
         BorderPane borderpane = new BorderPane();
-        GridPane pane = new GridPane();
+        pane = new GridPane();
         for(int i = 0; i < Rows; i++)
         {
             for(int j = 0; j < Cols; j++)
@@ -102,7 +104,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
 
     private void refresh()
     {
-        //does stuff
+
     }
 
     @Override
