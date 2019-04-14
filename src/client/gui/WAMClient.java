@@ -17,7 +17,7 @@ import static java.lang.Math.*;
 public class WAMClient {
 
     /** Turn on if standard output debug messages are desired. */
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     /** client socket to communicate with server */
     private Socket clientSocket;
@@ -44,7 +44,7 @@ public class WAMClient {
     public String arguments;
 
     /** sentinel loop used to control the main loop */
-    private boolean go;
+    private boolean go = true;
 
     private synchronized boolean goodToGo() {
         return this.go;
@@ -92,8 +92,7 @@ public class WAMClient {
 
     public void moleUp( String arguments ) {
 
-        String[] fields = arguments.trim().split( " " );
-        int moleNumber = Integer.parseInt(fields[0]);
+        int moleNumber = Integer.parseInt(arguments);
 
         int row = (int) floor((double) moleNumber / (double) board.COLS) + 1;
         int col = (moleNumber % board.COLS) + 1;
@@ -127,9 +126,11 @@ public class WAMClient {
         }
     }
 
-    /**
+    public String read() {
+        return networkIn.nextLine();
+    }
 
-    public void run() {
+    public void run2() {
         String request = "";
         while(true) {
             request = read();
@@ -147,22 +148,23 @@ public class WAMClient {
             }
         }
     }
-     */
+
     private void run() {
         while (this.goodToGo()) {
             try {
-                String request = this.networkIn.next();
-                String arguments = this.networkIn.nextLine().trim();
+                String request = this.networkIn.nextLine();
+                String[] tokens = request.split(" ");
+                System.out.println(request);
 
-                switch ( request ) {
+                switch ( tokens[0] ) {
                     case MOLE_UP:
-                        moleUp(arguments);
+                        this.moleUp(tokens[1]);
                         break;
                     case MOLE_DOWN:
-                        moleDown( arguments );
+                        this.moleDown( tokens[1] );
                         break;
                     case ERROR:
-                        error( arguments );
+                        error( tokens[1] );
                         break;
                     default:
                         System.err.println("Unrecognized request: " + request);
@@ -170,6 +172,7 @@ public class WAMClient {
                         break;
                 }
             }
+
             catch( NoSuchElementException nse ) {
                 // Looks like the connection shut down.
                 this.error( "Lost connection to server." );
@@ -180,6 +183,7 @@ public class WAMClient {
                 this.stop();
             }
         }
+
         this.close();
     }
 
@@ -188,18 +192,18 @@ public class WAMClient {
         //handles whacking sends a whack
     }
 
-//    public static void main(String[] args) throws IOException {
-//        if (args.length != 2) {
-//            System.out.println(
-//                    "Usage: java ConnectFourClient hostname port");
-//            System.exit(1);
-//        }
-//
-//        String hostname = args[0];
-//        int port = Integer.parseInt(args[1]);
-//        WAMClient client = new WAMClient(hostname, port, this.board);
-//        client.run();
-//    }
+    public static void main(String[] args) throws IOException, WAMException {
+        if (args.length != 2) {
+            System.out.println(
+                    "Usage: java ConnectFourClient hostname port");
+            System.exit(1);
+        }
+
+        String hostname = args[0];
+        int port = Integer.parseInt(args[1]);
+        WAMClient client = new WAMClient(hostname, port, new WAMBoard(4, 3, 1));
+        client.run2();
+    }
 
 
 }
