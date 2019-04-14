@@ -92,7 +92,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         borderpane.setTop(header);
         borderpane.setCenter(pane);
         ImageView back = (new ImageView(this.Background));
-        boxyMcboxface.getChildren().addAll(back,gamestaus);
+        boxyMcboxface.getChildren().addAll(gamestaus);
         borderpane.setBottom(boxyMcboxface);
 
         Scene scene = new Scene(borderpane);
