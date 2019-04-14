@@ -16,7 +16,7 @@ public class WAMBoard
      */
     public enum Mole
     {
-        MOLE_UP, MOLE_DOWN, NONE
+        MOLE_UP, MOLE_DOWN
     }
 
     /** the board */
@@ -56,7 +56,7 @@ public class WAMBoard
         {
             for(int col=0; col < COLS; col++)
             {
-                board[col][row] = Mole.NONE;
+                board[col][row] = Mole.MOLE_DOWN;
             }
         }
     }
@@ -193,7 +193,7 @@ public class WAMBoard
      * What is at this square?
      * @param row row number of square
      * @param col column number of square
-     * @return the player (or {@link Mole#NONE}) at the given location
+     * @return Mole at the given location
      */
     public Mole getContents(int row, int col)
     {

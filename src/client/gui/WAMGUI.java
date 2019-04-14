@@ -1,5 +1,6 @@
 package client.gui;
 
+import common.WAMException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -10,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -26,6 +28,8 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     private Image MOLE_UP;
     private Image Background;
     private WAMClient client;
+    Label gamestaus = new Label();
+    VBox boxyMcboxface = new VBox();
     private int Rows;
     private int Cols;
     private int duration;
@@ -61,14 +65,14 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
             this.boardarray = new Button[Rows][Cols];
 
         }
-        catch (Exception e)
+        catch (WAMException wame)
         {
-            e.printStackTrace();
+            wame.printStackTrace();
         }
     }
 
     @Override
-    public void start(Stage stage) throws Exception
+    public void start(Stage stage) throws WAMException
     {
         BorderPane borderpane = new BorderPane();
         pane = new GridPane();
@@ -86,6 +90,8 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         header.setText("\t\t\tWelcome to Whack A Mole");
         borderpane.setTop(header);
         borderpane.setCenter(pane);
+        ImageView back = (new ImageView(this.Background));
+        boxyMcboxface.getChildren().addAll(back,gamestaus);
 
         Scene scene = new Scene(borderpane);
         stage.setScene(scene);
@@ -104,7 +110,46 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
 
     private void refresh()
     {
+        WAMBoard.Status status = board.getStatus();
+        switch (status)
+        {
+            case ERROR:
+                this.gamestaus.setText( status.toString() );
+                break;
+            case I_WON:
+                this.gamestaus.setText( "You won. Yay!" );
+                break;
+            case I_LOST:
+                this.gamestaus.setText( "You lost. Boo!" );
+                break;
+            case TIE:
+                this.gamestaus.setText( "Tie game. Meh." );
+                break;
+            default:
+                this.gamestaus.setText(" ");
+        }
+        help_refresh();
+    }
 
+    private void help_refresh()
+    {
+        for(int i = 0; i < Rows; i++)
+        {
+            for(int j = 0; j < Cols; j++)
+            {
+                WAMBoard.Mole mole = board.getContents(i,j);
+                if(mole == WAMBoard.Mole.MOLE_UP)
+                {
+                    ImageView pic1 = new ImageView(this.MOLE_UP);
+                    boardarray[i][j].setGraphic(pic1);
+                }
+                else
+                {
+                    ImageView pic2 = new ImageView(this.MOLE_DOWN);
+                    boardarray[i][j].setGraphic(pic2);
+                }
+            }
+        }
     }
 
     @Override
