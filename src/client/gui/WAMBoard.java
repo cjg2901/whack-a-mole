@@ -148,16 +148,18 @@ public class WAMBoard
     /**
      * to inform them that a mole has gone down
      */
-    public void moleUp()
+    public void moleUp(int row, int col)
     {
+        this.board[row][col] = Mole.MOLE_UP;
         alertObservers();
     }
 
     /**
      * to inform players that a mole has gone down
      */
-    public void moleDown()
+    public void moleDown(int row, int col)
     {
+        this.board[row][col] = Mole.MOLE_DOWN;
         alertObservers();
     }
 
@@ -167,6 +169,9 @@ public class WAMBoard
     public void Wack(int col, int row)
     {
         //hit at location board[row][col]
+        this.board[row][col] = Mole.MOLE_DOWN;
+        alertObservers();
+        //contact server somehow
     }
 
     public void Error(String arguments)
