@@ -150,7 +150,7 @@ public class WAMBoard
      */
     public void moleUp(int row, int col)
     {
-        this.board[row][col] = Mole.MOLE_UP;
+        this.board[row-1][col-1] = Mole.MOLE_UP;
         alertObservers();
     }
 
@@ -159,7 +159,7 @@ public class WAMBoard
      */
     public void moleDown(int row, int col)
     {
-        this.board[row][col] = Mole.MOLE_DOWN;
+        this.board[row-1][col-1] = Mole.MOLE_DOWN;
         alertObservers();
     }
 
