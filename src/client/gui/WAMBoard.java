@@ -148,7 +148,7 @@ public class WAMBoard
     /**
      * to inform them that a mole has gone down
      */
-    public void moleUp(int moleNumber)
+    public void moleUp(int row, int col)
     {
         this.board[row][col] = Mole.MOLE_UP;
         alertObservers();
@@ -157,7 +157,7 @@ public class WAMBoard
     /**
      * to inform players that a mole has gone down
      */
-    public void moleDown(int moleNumber)
+    public void moleDown(int row, int col)
     {
         this.board[row][col] = Mole.MOLE_DOWN;
         alertObservers();
