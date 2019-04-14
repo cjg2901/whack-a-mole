@@ -47,20 +47,21 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
             String host = args.get(0);
             int port = Integer.parseInt(args.get(1));
 
-            this.board = new WAMBoard(this.Rows, this.Cols, this.players);
-            this.board.addObserver(this);
-
             this.MOLE_DOWN = new Image("client/gui/WAM-logo.png");
             this.MOLE_UP = new Image("client/gui/WAM-mole.png");
             this.Background = new Image("client/gui/WAM-bg.png");
-            this.client = new WAMClient(host, port, this.board);
 
+            this.client = new WAMClient(host, port, this.board);
             String arguments = client.arguments;
             String[] gameinfo = arguments.split(" ");
             this.Rows = Integer.parseInt(gameinfo[1]);
             this.Cols = Integer.parseInt(gameinfo[2]);
             this.players = Integer.parseInt(gameinfo[3]);
             this.duration = Integer.parseInt(gameinfo[4]);
+
+            this.board = new WAMBoard(this.Rows, this.Cols, this.players);
+            this.board.addObserver(this);
+
 
             this.boardarray = new Button[Rows][Cols];
 
@@ -92,6 +93,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         borderpane.setCenter(pane);
         ImageView back = (new ImageView(this.Background));
         boxyMcboxface.getChildren().addAll(back,gamestaus);
+        borderpane.setBottom(boxyMcboxface);
 
         Scene scene = new Scene(borderpane);
         stage.setScene(scene);
@@ -141,12 +143,12 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
                 if(mole == WAMBoard.Mole.MOLE_UP)
                 {
                     ImageView pic1 = new ImageView(this.MOLE_UP);
-                    boardarray[i][j].setGraphic(pic1);
+                    this.boardarray[i][j].setGraphic(pic1);
                 }
                 else
                 {
                     ImageView pic2 = new ImageView(this.MOLE_DOWN);
-                    boardarray[i][j].setGraphic(pic2);
+                    this.boardarray[i][j].setGraphic(pic2);
                 }
             }
         }

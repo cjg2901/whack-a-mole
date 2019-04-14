@@ -117,14 +117,14 @@ public class WAMClient {
     /**
      *
      */
-    public void close() {
+    public void close()
+    {
         try {
             this.clientSocket.close();
         }
         catch( IOException ioe ) {
             // squash
         }
-        this.board.close();
     }
 
     /**

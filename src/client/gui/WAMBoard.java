@@ -56,7 +56,7 @@ public class WAMBoard
         {
             for(int col=0; col < COLS; col++)
             {
-                board[col][row] = Mole.MOLE_DOWN;
+                board[row][col] = Mole.MOLE_DOWN;
             }
         }
     }
@@ -197,6 +197,6 @@ public class WAMBoard
      */
     public Mole getContents(int row, int col)
     {
-        return this.board[col][row];
+        return this.board[row][col];
     }
 }
