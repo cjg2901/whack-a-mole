@@ -26,7 +26,7 @@ public class WAMClient {
     /** Used to write responses to the server. */
     private PrintStream networkOut;
     /** the model which keeps track of the game */
-    private WAMBoard board;
+    public WAMBoard board;
 
     /**
      * Print method that does something only if DEBUG is true
