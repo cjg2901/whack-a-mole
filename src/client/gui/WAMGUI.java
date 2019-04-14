@@ -138,10 +138,8 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     {
         for(int i = 0; i < Cols; i++)
         {
-            System.out.println("HI");
             for(int j = 0; j < Rows; j++)
             {
-                System.out.println("I'm here");
                 WAMBoard.Mole mole = board.getContents(i,j);
                 if(mole == WAMBoard.Mole.MOLE_UP)
                 {
