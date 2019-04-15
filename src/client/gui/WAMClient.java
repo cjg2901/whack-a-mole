@@ -98,7 +98,7 @@ public class WAMClient {
         int col = (moleNumber % board.COLS) + 1;
 
         // Update the board model.
-        this.board.moleUp(row, col);
+        this.board.moleUp(row-1, col-1);
     }
 
     public void moleDown( String arguments ) {
@@ -110,7 +110,7 @@ public class WAMClient {
         int col = (moleNumber % board.COLS) + 1;
 
         // Update the board model.
-        this.board.moleDown(row, col);
+        this.board.moleDown(row-1, col-1);
     }
 
     /**
