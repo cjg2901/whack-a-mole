@@ -89,7 +89,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
             }
         }
         Label header = new Label();
-        header.setText("\t\t\tWelcome to Whack A Mole");
+        header.setText("\t\t\t\t\t  Welcome to Whack A Mole");
         borderpane.setTop(header);
         borderpane.setCenter(pane);
         ImageView back = (new ImageView(this.Background));
