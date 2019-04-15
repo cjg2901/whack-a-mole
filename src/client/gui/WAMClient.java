@@ -12,7 +12,10 @@ import static common.WAMProtocol.*;
 import static java.lang.Math.*;
 
 /**
+ * Client which interfaces with the server for WAM.
+ * Communicates server messages to the model.
  *
+ * @author Craig Gebo
  */
 public class WAMClient {
 
@@ -46,14 +49,29 @@ public class WAMClient {
     /** sentinel loop used to control the main loop */
     private boolean go = true;
 
+    /**
+     *
+     * @return Whether the game is running or not
+     */
     private synchronized boolean goodToGo() {
         return this.go;
     }
 
+    /**
+     * Stops the game running
+     */
     private synchronized void stop() {
         this.go = false;
     }
 
+    /**
+     * Creates a new client.
+     *
+     * @param host name of the host
+     * @param port port number
+     * @param board the model for the game
+     * @throws WAMException
+     */
     public WAMClient (String host, int port, WAMBoard board) throws WAMException {
         try
         {
@@ -77,6 +95,10 @@ public class WAMClient {
         }
     }
 
+    /**
+     * Throws an error and stops the game.
+     * @param arguments
+     */
     public void error( String arguments ) {
         this.board.Error( arguments );
         this.stop();
@@ -90,6 +112,12 @@ public class WAMClient {
         new Thread(() -> this.run()).start();
     }
 
+    /**
+     * Called when the client received a message from the server that
+     * a mole is up.
+     *
+     * @param arguments the number of the mole
+     */
     public void moleUp( String arguments ) {
 
         int moleNumber = Integer.parseInt(arguments);
@@ -101,6 +129,12 @@ public class WAMClient {
         this.board.moleUp(row, col);
     }
 
+    /**
+     * Called when the client received a message from the server that
+     * a mole is down.
+     *
+     * @param arguments the number of the mole
+     */
     public void moleDown( String arguments ) {
 
         String[] fields = arguments.trim().split( " " );
@@ -114,7 +148,7 @@ public class WAMClient {
     }
 
     /**
-     *
+     * Closes the socket to the server.
      */
     public void close()
     {
@@ -126,6 +160,7 @@ public class WAMClient {
         }
     }
 
+    /**
     public String read() {
         return networkIn.nextLine();
     }
@@ -149,6 +184,10 @@ public class WAMClient {
         }
     }
 
+     */
+    /**
+     * Runs the client, gets messages from the server.
+     */
     private void run() {
         while (this.goodToGo()) {
             try {
@@ -192,6 +231,7 @@ public class WAMClient {
         //handles whacking sends a whack
     }
 
+    /**
     public static void main(String[] args) throws IOException, WAMException {
         if (args.length != 2) {
             System.out.println(
@@ -204,6 +244,6 @@ public class WAMClient {
         WAMClient client = new WAMClient(hostname, port, new WAMBoard(4, 3, 1));
         client.run2();
     }
-
+*/
 
 }
