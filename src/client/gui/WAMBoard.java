@@ -6,7 +6,8 @@ import java.util.List;
 /**
  * The model for the Whack-A-Mole game
  *
- * @author srikamal
+ * @author primary srikamal
+ * @author secondary Craig Gebo
  */
 public class WAMBoard
 {

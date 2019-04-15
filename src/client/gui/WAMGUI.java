@@ -18,11 +18,14 @@ import java.util.List;
 
 /**
  * A JavaFX GUI for the networked Whack-A-Mole Game
- * Author : Sri Kamal V. Chillarage
+ * @author Sri Kamal
  */
 public class WAMGUI extends Application implements Observer<WAMBoard>
 {
 
+    /**
+     * Contains all variables needed to run the GUI
+     */
     private WAMBoard board;
     private Image MOLE_DOWN;
     private Image MOLE_UP;
@@ -37,6 +40,9 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     Button[][] boardarray;
     GridPane pane;
 
+    /**
+     * Initialises said variables and utilizes them effectively
+     */
     @Override
     public void init()
     {
@@ -73,6 +79,11 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         }
     }
 
+    /**
+     * creates the initial GUI that the USER sees.
+     * @param stage
+     * @throws WAMException
+     */
     @Override
     public void start(Stage stage) throws WAMException
     {
@@ -105,12 +116,18 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         this.client.startListener();
     }
 
+    /**
+     * severs client connection
+     */
     @Override
     public void stop()
     {
         this.client.close();
     }
 
+    /**
+     * Helps keep updating the GUI as per board changes
+     */
     private void refresh()
     {
         WAMBoard.Status status = board.getStatus();
@@ -134,6 +151,9 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         help_refresh();
     }
 
+    /**
+     * helper function used to update the view
+     */
     private void help_refresh()
     {
         for(int i = 0; i < Cols; i++)
@@ -155,6 +175,10 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         }
     }
 
+    /**
+     * update method that calls refresh and ensures only Javafx threads run
+     * @param wamBoard
+     */
     @Override
     public void update(WAMBoard wamBoard)
     {
@@ -168,6 +192,10 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         }
     }
 
+    /**
+     * Main method
+     * @param args
+     */
     public static void main(String[] args)
     {
         if (args.length != 2)

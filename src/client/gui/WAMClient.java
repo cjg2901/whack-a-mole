@@ -12,9 +12,7 @@ import static common.WAMProtocol.*;
 import static java.lang.Math.*;
 
 /**
- * WAMClient interfaces with the server and sends information
- * to the game board.
- * @author Craig Gebo
+ *
  */
 public class WAMClient {
 
@@ -128,7 +126,6 @@ public class WAMClient {
         }
     }
 
-    /**
     public String read() {
         return networkIn.nextLine();
     }
@@ -151,7 +148,6 @@ public class WAMClient {
             }
         }
     }
-     */
 
     private void run() {
         while (this.goodToGo()) {
@@ -196,7 +192,6 @@ public class WAMClient {
         //handles whacking sends a whack
     }
 
-    /**
     public static void main(String[] args) throws IOException, WAMException {
         if (args.length != 2) {
             System.out.println(
@@ -209,7 +204,6 @@ public class WAMClient {
         WAMClient client = new WAMClient(hostname, port, new WAMBoard(4, 3, 1));
         client.run2();
     }
-     */
 
 
 }

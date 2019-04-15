@@ -20,6 +20,8 @@ package common;
  * placed mole-holes in future versions of the game.
  *
  * @author RIT CS
+ * @author Sri Kamal
+ * @author Craig Gebo
  */
 public interface WAMProtocol {
     /**
