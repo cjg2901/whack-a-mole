@@ -226,8 +226,9 @@ public class WAMClient {
         this.close();
     }
 
-    public void Whack()
+    public void Whack(int fake_af_i, int fake_af_j)
     {
+        this.board.Wack(fake_af_i,fake_af_j);
         //handles whacking sends a whack
     }
 
