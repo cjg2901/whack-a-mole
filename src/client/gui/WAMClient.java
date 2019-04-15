@@ -12,7 +12,9 @@ import static common.WAMProtocol.*;
 import static java.lang.Math.*;
 
 /**
- *
+ * WAMClient interfaces with the server and sends information
+ * to the game board.
+ * @author Craig Gebo
  */
 public class WAMClient {
 
