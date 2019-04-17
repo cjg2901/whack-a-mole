@@ -1,87 +1,164 @@
 package server;
 
-import client.gui.WAMBoard;
+import common.WAMException;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
-import static common.WAMProtocol.WELCOME;
-
-public class WAMServer {
-    /** The game of ConnectFour */
-    private WAMBoard game;
-    /** The socket to the first client */
-    private Socket client;
-    /** Input from the first client */
-    private Scanner in;
-    /** Output to the first client */
-    private PrintWriter out;
+public class WAMServer implements Runnable{
+    /**
+     * The {@link ServerSocket} used to wait for incoming client connections.
+     */
+    private ServerSocket server;
+    private int rows;
+    private int cols;
+    private int duration;
+    private int numPlayers;
 
     /**
-     * Creates a new Connect Four Server
+     * Creates a new {@link WAMServerOnePlayer} that listens for incoming
+     * connections on the specified port.
      *
-     * @param c the socket to the first client
-     * @param c the socket to the second client
-     * @throws IOException
+     * @param port The port on which the server should listen for incoming
+     *             connections.
+     * @throws common.WAMException If there is an error creating the
+     *                              {@link ServerSocket}
      */
-    public WAMServer(Socket c, int rows, int cols, int numPlayers) throws IOException {
-        game = new WAMBoard(rows, cols, numPlayers);
-        client = c;
-        in = new Scanner(c.getInputStream());
-        out = new PrintWriter(c.getOutputStream());
+    public WAMServer(int port) throws WAMException {
+        try {
+            server = new ServerSocket(port);
+        } catch (IOException e) {
+            throw new WAMException(e);
+        }
     }
 
     /**
-     * Sends a message to a given output
+     * Starts a new {@link WAMServerOnePlayer}. Simply creates the server and
+     * calls {@link #run()} in the main thread.
      *
-     * @param message the string to be sent
-     * @param out the output to send the message
+     * @param args Used to specify the port on which the server should listen
+     *             for incoming client connections.
+     * @throws WAMException If there is an error starting the server.
      */
-    public static void send(String message, PrintWriter out) {
-        out.println(message);
-        out.flush();
-    }
+    public static void main(String[] args) throws WAMException {
 
-    /**
-     * Reads the next line from a given input
-     *
-     * @param in the input to read from
-     * @return the next line
-     */
-    public String read(Scanner in) {
-        return in.nextLine();
-    }
-
-    /**
-     * Closes a given socket
-     *
-     * @param socket the socket to be closed
-     * @throws IOException
-     */
-    public void close(Socket socket) throws IOException {
-        socket.close();
-    }
-
-    public static void main(String[] args) throws IOException{
         if (args.length != 5) {
-            System.out.println("Usage: java ConnectFourServer port");
+            System.out.println("Usage: java ConnectFourServer <port>");
             System.exit(1);
         }
 
         int port = Integer.parseInt(args[0]);
-        int rows = Integer.parseInt(args[1]);
-        int cols = Integer.parseInt(args[2]);
-        int numPlayers = Integer.parseInt(args[3]);
-        int duration = Integer.parseInt(args[4]);
-        ServerSocket server = new ServerSocket(port);
-        System.out.println("Waiting for client...");
-        Socket c = server.accept();
-        String welcome = WELCOME + " " + rows + " " + cols + " " + numPlayers + " " + duration;
-        send(welcome, new PrintWriter(c.getOutputStream()));
-        System.out.println("Client 1 has been connected.");
-        WAMServer gameServer = new WAMServer(c,rows, cols, numPlayers);
+        WAMServer server = new WAMServer(port);
+        server.rows = Integer.parseInt(args[1]);
+        server.cols = Integer.parseInt(args[2]);
+        server.numPlayers = Integer.parseInt(args[3]);
+        server.duration = Integer.parseInt(args[4]);
+        server.run();
+
+    }
+
+    /**
+     * Waits for two clients to connect. Creates a {@link }
+     * for each and then pairs them off in a {@link }.<P>
+     */
+    @Override
+    public void run() {
+        try {
+            /**
+            System.out.println("Waiting for player one...");
+            Socket playerOneSocket = server.accept();
+            WAMPlayer playerOne =
+                    new WAMPlayer(playerOneSocket, rows, cols, numPlayers, 1);
+            playerOne.connect();
+            System.out.println("Player one connected!");
+            if (numPlayers > 1) {
+                System.out.println("Waiting for player two...");
+                Socket playerTwoSocket = server.accept();
+                WAMPlayer playerTwo =
+                        new WAMPlayer(playerTwoSocket, rows, cols, numPlayers, 2);
+                playerTwo.connect();
+                System.out.println("Player two connected!");
+            }
+            if (numPlayers > 2) {
+                System.out.println("Waiting for player three...");
+                Socket playerThreeSocket = server.accept();
+                WAMPlayer playerThree =
+                        new WAMPlayer(playerThreeSocket, rows, cols, numPlayers, 3);
+                playerThree.connect();
+                System.out.println("Player three connected!");
+            }
+            System.out.println("Starting game!");
+            */
+            WAMGame game;
+            Socket playerOneSocket;
+            WAMPlayer playerOne;
+            Socket playerTwoSocket;
+            WAMPlayer playerTwo;
+            Socket playerThreeSocket;
+            WAMPlayer playerThree;
+            switch (numPlayers) {
+                case 1:
+                    System.out.println("Waiting for player one...");
+                    playerOneSocket = server.accept();
+                    playerOne =
+                            new WAMPlayer(playerOneSocket, rows, cols, numPlayers, 1);
+                    playerOne.connect();
+                    System.out.println("Player one connected!");
+                    System.out.println("Starting game!");
+                    game = new WAMGame(playerOne);
+                    break;
+                case 2:
+                    System.out.println("Waiting for player one...");
+                    playerOneSocket = server.accept();
+                    playerOne =
+                            new WAMPlayer(playerOneSocket, rows, cols, numPlayers, 1);
+                    playerOne.connect();
+                    System.out.println("Player one connected!");
+
+                    System.out.println("Waiting for player two...");
+                    playerTwoSocket = server.accept();
+                    playerTwo =
+                            new WAMPlayer(playerTwoSocket, rows, cols, numPlayers, 2);
+                    playerTwo.connect();
+                    System.out.println("Player two connected!");
+                    System.out.println("Starting game!");
+                    game = new WAMGame(playerOne, playerTwo);
+                    break;
+
+                case 3:
+                    System.out.println("Waiting for player one...");
+                    playerOneSocket = server.accept();
+                    playerOne =
+                            new WAMPlayer(playerOneSocket, rows, cols, numPlayers, 1);
+                    playerOne.connect();
+                    System.out.println("Player one connected!");
+                    System.out.println("Waiting for player two...");
+                    playerTwoSocket = server.accept();
+                    playerTwo =
+                            new WAMPlayer(playerTwoSocket, rows, cols, numPlayers, 2);
+                    playerTwo.connect();
+                    System.out.println("Player two connected!");
+                    System.out.println("Waiting for player three...");
+                    playerThreeSocket = server.accept();
+                    playerThree =
+                            new WAMPlayer(playerThreeSocket, rows, cols, numPlayers, 3);
+                    playerThree.connect();
+                    System.out.println("Player three connected!");
+                    System.out.println("Starting game!");
+                    game = new WAMGame(playerOne, playerTwo, playerThree);
+                    break;
+                default:
+                    game = new WAMGame();
+            }
+            // server is not multithreaded
+            new Thread(game).run();
+        } catch (IOException e) {
+            System.err.println("Something has gone horribly wrong!");
+            e.printStackTrace();
+        } catch (WAMException e) {
+            System.err.println("Failed to create players!");
+            e.printStackTrace();
+        }
     }
 }
