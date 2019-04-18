@@ -65,11 +65,12 @@ public class WAMServer implements Runnable{
     @Override
     public void run() {
         try {
-            WAMPlayer[] players = new WAMPlayer[]{};
+            WAMPlayer[] players = new WAMPlayer[numPlayers];
             for(int i=0; i < numPlayers; i++) {
                 System.out.println("Waiting for player " + i + "...");
                 Socket playerSocket = server.accept();
                 WAMPlayer player = new WAMPlayer(playerSocket, rows, cols, numPlayers, i);
+                players[i] = player;
                 player.connect();
                 System.out.println("Player " + i + " connected!");
             }
