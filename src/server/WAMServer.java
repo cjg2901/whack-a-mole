@@ -65,31 +65,17 @@ public class WAMServer implements Runnable{
     @Override
     public void run() {
         try {
-            /**
-            System.out.println("Waiting for player one...");
-            Socket playerOneSocket = server.accept();
-            WAMPlayer playerOne =
-                    new WAMPlayer(playerOneSocket, rows, cols, numPlayers, 1);
-            playerOne.connect();
-            System.out.println("Player one connected!");
-            if (numPlayers > 1) {
-                System.out.println("Waiting for player two...");
-                Socket playerTwoSocket = server.accept();
-                WAMPlayer playerTwo =
-                        new WAMPlayer(playerTwoSocket, rows, cols, numPlayers, 2);
-                playerTwo.connect();
-                System.out.println("Player two connected!");
-            }
-            if (numPlayers > 2) {
-                System.out.println("Waiting for player three...");
-                Socket playerThreeSocket = server.accept();
-                WAMPlayer playerThree =
-                        new WAMPlayer(playerThreeSocket, rows, cols, numPlayers, 3);
-                playerThree.connect();
-                System.out.println("Player three connected!");
+            WAMPlayer[] players = new WAMPlayer[]{};
+            for(int i=0; i < numPlayers; i++) {
+                System.out.println("Waiting for player " + i + "...");
+                Socket playerSocket = server.accept();
+                WAMPlayer player = new WAMPlayer(playerSocket, rows, cols, numPlayers, i);
+                player.connect();
+                System.out.println("Player " + i + " connected!");
             }
             System.out.println("Starting game!");
-            */
+            WAMGame game = new WAMGame(players);
+            /**
             WAMGame game;
             Socket playerOneSocket;
             WAMPlayer playerOne;
@@ -150,7 +136,8 @@ public class WAMServer implements Runnable{
                     break;
                 default:
                     game = new WAMGame();
-            }
+             }
+             */
             // server is not multithreaded
             new Thread(game).run();
         } catch (IOException e) {
