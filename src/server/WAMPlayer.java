@@ -62,8 +62,8 @@ public class WAMPlayer implements Closeable {
         printer.println(WELCOME + " " + rows + " " + cols + " " + numPlayers + " " + playerNumber);
     }
 
-    public void moleUp() {
-        printer.println(MOLE_UP + " 1");
+    public synchronized void moleUp(int moleNumber) {
+        printer.println(MOLE_UP + " " + moleNumber);
     }
 
 
