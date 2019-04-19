@@ -66,6 +66,9 @@ public class WAMPlayer implements Closeable {
         printer.println(MOLE_UP + " " + moleNumber);
     }
 
+    public synchronized void moleDown(int moleNumber) {
+        printer.println(MOLE_DOWN + " " + moleNumber);
+    }
 
     /**
      * Called to send a {@link #GAME_WON} request to the client because the

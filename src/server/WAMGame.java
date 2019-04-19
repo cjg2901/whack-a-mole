@@ -31,7 +31,7 @@ public class WAMGame implements Runnable {
         for (int i=0; i < rows*cols; i++) {
             Mole mole = new Mole(i, players);
             moles[i] = mole;
-            new Thread(mole).start();
+            mole.start();
         }
     }
 }
