@@ -13,24 +13,25 @@ public class Mole extends Thread {
 
     @Override
     public void run() {
-        try {
-            Random random = new Random();
-            sleep(random.nextInt(5000));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        for (WAMPlayer player : players) {
-            player.moleUp(moleNumber);
-        }
+        while (true) {
+            try {
+                Random random = new Random();
+                sleep(random.nextInt(10000));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            for (WAMPlayer player : players) {
+                player.moleUp(moleNumber);
+            }
 
-        try {
-            Random random = new Random();
-            sleep(random.nextInt(10000));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        for (WAMPlayer player : players) {
-            player.moleDown(moleNumber);
+            try {
+                sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            for (WAMPlayer player : players) {
+                player.moleDown(moleNumber);
+            }
         }
     }
 }

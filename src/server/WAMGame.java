@@ -23,6 +23,7 @@ public class WAMGame implements Runnable {
         this.rows = rows;
         this.cols = cols;
         this.moles = new Mole[rows*cols];
+        this.game = new WAMBoard(rows, cols, players.length);
     }
 
     @Override
