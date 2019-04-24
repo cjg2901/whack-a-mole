@@ -164,31 +164,6 @@ public class WAMClient {
     }
 
     /**
-    public String read() {
-        return networkIn.nextLine();
-    }
-
-    public void run2() {
-        String request = "";
-        while(true) {
-            request = read();
-            String[] tokens = request.split(" ");
-            switch (tokens[0]) {
-                case WAMProtocol.WELCOME:
-                    System.out.println(request);
-                    break;
-                case WAMProtocol.MOLE_UP:
-                    System.out.println(request);
-                    break;
-                case WAMProtocol.MOLE_DOWN:
-                    System.out.println(request);
-                    break;
-            }
-        }
-    }
-
-     */
-    /**
      * Runs the client, gets messages from the server.
      */
     private void run() {
@@ -207,6 +182,15 @@ public class WAMClient {
                         break;
                     case ERROR:
                         error( tokens[1] );
+                        break;
+                    case GAME_WON:
+                        board.gameWon();
+                        break;
+                    case GAME_LOST:
+                        board.gameLost();
+                        break;
+                    case GAME_TIED:
+                        board.gameTied();
                         break;
                     default:
                         System.err.println("Unrecognized request: " + request);
@@ -235,19 +219,5 @@ public class WAMClient {
         //handles whacking sends a whack
     }
 
-    /**
-    public static void main(String[] args) throws IOException, WAMException {
-        if (args.length != 2) {
-            System.out.println(
-                    "Usage: java ConnectFourClient hostname port");
-            System.exit(1);
-        }
-
-        String hostname = args[0];
-        int port = Integer.parseInt(args[1]);
-        WAMClient client = new WAMClient(hostname, port, new WAMBoard(4, 3, 1));
-        client.run2();
-    }
-*/
 
 }
