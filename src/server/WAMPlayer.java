@@ -30,6 +30,7 @@ public class WAMPlayer implements Closeable {
     private int cols;
     private int numPlayers;
     private int playerNumber;
+    private int score;
 
     /**
      * Creates a new {@link WAMPlayer} that will use the specified
@@ -53,6 +54,7 @@ public class WAMPlayer implements Closeable {
         this.cols = cols;
         this.numPlayers = numPlayers;
         this.playerNumber = playerNumber;
+        this.score = 0;
     }
 
     /**
@@ -106,6 +108,10 @@ public class WAMPlayer implements Closeable {
     public void error(String message) {
         printer.println(ERROR + " " + message);
     }
+
+    /**
+     * Whack message handling
+     */
 
     /**
      * Called to close the client connection after the game is over.

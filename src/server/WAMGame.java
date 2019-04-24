@@ -13,24 +13,27 @@ public class WAMGame implements Runnable {
     private int cols;
 
     /** the game model */
-    private WAMBoard game;
+    private WAM game;
 
     /**
      * Initialize the game.
      *
      * @param
      */
-    public WAMGame(int rows, int cols, WAMPlayer... players) {
+    public WAMGame(int rows, int cols, WAMPlayer... players)
+    {
 
         this.players = players;
         this.rows = rows;
         this.cols = cols;
         this.moles = new Mole[rows*cols];
-        this.game = new WAMBoard(rows, cols, players.length);
+        this.game = new WAM(rows, cols);
     }
 
     @Override
-    public void run() {
+    public void run()
+    {
+        // time by craig
         System.out.println("Game started");
         for (int i=0; i < rows*cols; i++) {
             Mole mole = new Mole(i, players);

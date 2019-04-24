@@ -216,6 +216,8 @@ public class WAMClient {
     public void Whack(int fake_af_i, int fake_af_j)
     {
         this.board.Wack(fake_af_i,fake_af_j);
+        int mole = ((fake_af_i*board.COLS)-1) + fake_af_j;
+        networkOut.println(WHACK + " " + mole);
         //handles whacking sends a whack
     }
 
