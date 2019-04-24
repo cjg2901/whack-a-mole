@@ -21,7 +21,7 @@ public class WAMServer implements Runnable{
     private int numPlayers;
 
     /**
-     * Creates a new {@link WAMServerOnePlayer} that listens for incoming
+     * Creates a new that listens for incoming
      * connections on the specified port.
      *
      * @param port The port on which the server should listen for incoming
@@ -38,7 +38,7 @@ public class WAMServer implements Runnable{
     }
 
     /**
-     * Starts a new {@link WAMServerOnePlayer}. Simply creates the server and
+     * Starts a new. Simply creates the server and
      * calls {@link #run()} in the main thread.
      *
      * @param args Used to specify the port on which the server should listen
