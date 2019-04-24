@@ -1,4 +1,7 @@
 package client.gui;
+/**
+ * needs to handle GameWon etc messages
+ */
 
 import common.WAMProtocol;
 import common.WAMException;

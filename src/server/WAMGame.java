@@ -1,4 +1,7 @@
 package server;
+/**
+ * needs to check game won, make move, tied game etc
+ */
 
 import client.gui.WAMBoard;
 

@@ -1,4 +1,9 @@
 package client.gui;
+/**
+ * handle scores,
+ * send mole down/whack to server
+ * sending messages to players
+ */
 
 import common.WAMException;
 import javafx.application.Application;

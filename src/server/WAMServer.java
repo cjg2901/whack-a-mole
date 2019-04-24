@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * make only one server
+ */
+
 public class WAMServer implements Runnable{
     /**
      * The {@link ServerSocket} used to wait for incoming client connections.

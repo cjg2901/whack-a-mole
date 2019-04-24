@@ -10,6 +10,10 @@ import java.util.Scanner;
 
 import static common.WAMProtocol.WELCOME;
 
+/**
+ * ideally delete this class
+ */
+
 public class WAMServerOnePlayer {
     /** The game of ConnectFour */
     private WAMBoard game;
