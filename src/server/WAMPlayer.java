@@ -30,7 +30,7 @@ public class WAMPlayer implements Closeable {
     private int cols;
     private int numPlayers;
     private int playerNumber;
-    private int score;
+    public int score;
 
     /**
      * Creates a new {@link WAMPlayer} that will use the specified
