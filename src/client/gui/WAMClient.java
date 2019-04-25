@@ -163,6 +163,7 @@ public class WAMClient {
         }
     }
 
+
     /**
      * Runs the client, gets messages from the server.
      */
@@ -182,15 +183,6 @@ public class WAMClient {
                         break;
                     case ERROR:
                         error( tokens[1] );
-                        break;
-                    case GAME_WON:
-                        board.gameWon();
-                        break;
-                    case GAME_LOST:
-                        board.gameLost();
-                        break;
-                    case GAME_TIED:
-                        board.gameTied();
                         break;
                     default:
                         System.err.println("Unrecognized request: " + request);
@@ -216,8 +208,6 @@ public class WAMClient {
     public void Whack(int fake_af_i, int fake_af_j)
     {
         this.board.Wack(fake_af_i,fake_af_j);
-        int mole = ((fake_af_i*board.COLS)-1) + fake_af_j;
-        networkOut.println(WHACK + " " + mole);
         //handles whacking sends a whack
     }
 

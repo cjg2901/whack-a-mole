@@ -11,6 +11,7 @@ public class WAMGame implements Runnable {
     private Mole[] moles;
     private int rows;
     private int cols;
+    private int duration;
 
     /** the game model */
     private WAM game;
@@ -20,9 +21,9 @@ public class WAMGame implements Runnable {
      *
      * @param
      */
-    public WAMGame(int rows, int cols, WAMPlayer... players)
+    public WAMGame(int rows, int cols, int duration, WAMPlayer... players)
     {
-
+        this.duration = duration;
         this.players = players;
         this.rows = rows;
         this.cols = cols;
@@ -40,5 +41,17 @@ public class WAMGame implements Runnable {
             moles[i] = mole;
             mole.start();
         }
+        synchronized(this) {
+            try {
+                wait(duration * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Game over");
+        for (Mole mole : moles) {
+            mole.stopGame();
+        }
+
     }
 }

@@ -73,7 +73,7 @@ public class WAMPlayer implements Closeable {
     }
 
     /**
-     * Called to send a  request to the client because the
+     * Called to send a GAME_WON request to the client because the
      * player's most recent move won the game.
      *
      */
@@ -83,7 +83,7 @@ public class WAMPlayer implements Closeable {
     }
 
     /**
-     * Called to send a  request to the client because the
+     * Called to send a GAME_LOST request to the client because the
      * other player's most recent move won the game.
      *
      */
@@ -92,7 +92,7 @@ public class WAMPlayer implements Closeable {
     }
 
     /**
-     * Called to send a  request to the client because the
+     * Called to send a GAME_TIED request to the client because the
      * game tied.
      */
     public void gameTied()  {
@@ -100,7 +100,7 @@ public class WAMPlayer implements Closeable {
     }
 
     /**
-     * Called to send an  to the client. This is called if either
+     * Called to send an ERROR to the client. This is called if either
      * client has invalidated themselves with a bad response.
      *
      * @param message The error message.

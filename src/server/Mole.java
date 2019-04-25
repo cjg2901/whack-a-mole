@@ -5,15 +5,21 @@ public class Mole extends Thread {
 
     private int moleNumber;
     private WAMPlayer[] players;
+    private boolean gameRunning;
 
     public Mole(int moleNumber, WAMPlayer[] players) {
         this.moleNumber = moleNumber;
         this.players = players;
+        this.gameRunning = true;
+    }
+
+    public void stopGame() {
+        this.gameRunning = false;
     }
 
     @Override
     public void run() {
-        while (true) {
+        while (gameRunning) {
             try {
                 Random random = new Random();
                 sleep(random.nextInt(10000));

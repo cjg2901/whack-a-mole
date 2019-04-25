@@ -79,7 +79,7 @@ public class WAMServer implements Runnable{
                 System.out.println("Player " + i + " connected!");
             }
             System.out.println("Starting game!");
-            WAMGame game = new WAMGame(rows, cols, players);
+            WAMGame game = new WAMGame(rows, cols, duration, players);
             // server is not multithreaded
             new Thread(game).start();
         } catch (IOException e) {
