@@ -1,29 +1,28 @@
 package server;
 
+import client.gui.WAMBoard;
+
 public class WAM
 {
+    private int ROWS;
+    private int COLS;
+    private Mole[][] board;
+    private WAMPlayer[] players;
+    private WAMBoard.Status status;
 
-    /**
-     * Used to indicate a mole that has been made on the board.
-     */
-    public enum Mole
+    private enum Mole
     {
         MOLE_UP, MOLE_DOWN
     }
 
-    public int ROWS;
-    public int COLS;
-
-    private Mole[][] board;
-
-    private WAMPlayer[] player;
-
-    public WAM(int rows, int cols, WAMPlayer[] player)
+    public WAM(int rows, int cols, WAMPlayer[] players)
     {
         this.ROWS = rows;
         this.COLS = cols;
-        this.player = new WAMPlayer[player.length];
-        this.board = new Mole [ROWS][COLS];
+        this.board = new Mole[rows][cols];
+        this.players = players;
+        this.status = WAMBoard.Status.NOT_OVER;
+
         for(int col=0; col<COLS; col++)
         {
             for(int row=0; row < ROWS; row++)
@@ -31,28 +30,23 @@ public class WAM
                 board[row][col] = Mole.MOLE_DOWN;
             }
         }
-        for (int i = 0; i < player.length; i ++)
-        {
-            this.player[i] = player[i];
-        }
     }
 
-    public WAMPlayer hasWonGame()
+    public WAMPlayer hasWON()
     {
         int highscore = 0;
-        for (WAMPlayer currentWinner : this.player)
+        for (WAMPlayer current:players)
         {
-            if (currentWinner.score > highscore)
+            if(current.score>highscore)
             {
-                highscore = currentWinner.score;
-
+                highscore = current.score;
             }
         }
-        for (WAMPlayer Winner : this.player)
+        for (WAMPlayer current:players)
         {
-            if (Winner.score == highscore)
+            if(highscore == current.score)
             {
-                return Winner;
+                return current;
             }
         }
         return null;
@@ -60,6 +54,18 @@ public class WAM
 
     public boolean hasTied()
     {
+        int highscore = 0;
+        for (WAMPlayer current: players)
+        {
+            if(highscore == current.score)
+            {
+                return true;
+            }
+            if(current.score>highscore)
+            {
+                highscore = current.score;
+            }
+        }
         return false;
     }
 }

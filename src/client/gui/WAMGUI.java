@@ -1,4 +1,5 @@
 package client.gui;
+
 /**
  * handle scores,
  * send mole down/whack to server
@@ -8,7 +9,6 @@ package client.gui;
 import common.WAMException;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,7 +36,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     private Image MOLE_UP;
     private Image Background;
     private WAMClient client;
-    Label gamestaus = new Label();
+    Label gamestatus = new Label();
     VBox boxyMcboxface = new VBox();
     private int Rows;
     private int Cols;
@@ -111,7 +111,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         borderpane.setTop(header);
         borderpane.setCenter(pane);
         ImageView back = (new ImageView(this.Background));
-        boxyMcboxface.getChildren().addAll(gamestaus);
+        boxyMcboxface.getChildren().addAll(gamestatus);
         borderpane.setBottom(boxyMcboxface);
 
         Scene scene = new Scene(borderpane);
@@ -141,19 +141,19 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         switch (status)
         {
             case ERROR:
-                this.gamestaus.setText( status.toString() );
+                this.gamestatus.setText( status.toString() );
                 break;
             case I_WON:
-                this.gamestaus.setText( "You won. Yay!" );
+                this.gamestatus.setText( "You won. Yay!" );
                 break;
             case I_LOST:
-                this.gamestaus.setText( "You lost. Boo!" );
+                this.gamestatus.setText( "You lost. Boo!" );
                 break;
             case TIE:
-                this.gamestaus.setText( "Tie game. Meh." );
+                this.gamestatus.setText( "Tie game. Meh." );
                 break;
             default:
-                this.gamestaus.setText(" ");
+                this.gamestatus.setText(" ");
         }
         help_refresh();
     }

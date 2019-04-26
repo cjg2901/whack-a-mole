@@ -1,9 +1,10 @@
 package server;
+
+import server.WAM;
+
 /**
  * needs to check game won, make move, tied game etc
  */
-
-import client.gui.WAMBoard;
 
 public class WAMGame implements Runnable {
 
@@ -28,7 +29,7 @@ public class WAMGame implements Runnable {
         this.rows = rows;
         this.cols = cols;
         this.moles = new Mole[rows*cols];
-        this.game = new WAM(rows, cols);
+        this.game = new WAM(rows, cols, players);
     }
 
     @Override

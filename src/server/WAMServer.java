@@ -19,6 +19,7 @@ public class WAMServer implements Runnable{
     private int cols;
     private int duration;
     private int numPlayers;
+    public WAMPlayer[] players;
 
     /**
      * Creates a new that listens for incoming
@@ -69,7 +70,7 @@ public class WAMServer implements Runnable{
     @Override
     public void run() {
         try {
-            WAMPlayer[] players = new WAMPlayer[numPlayers];
+            this.players = new WAMPlayer[numPlayers];
             for(int i=0; i < numPlayers; i++) {
                 System.out.println("Waiting for player " + i + "...");
                 Socket playerSocket = server.accept();
