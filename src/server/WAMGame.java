@@ -1,5 +1,6 @@
 package server;
 
+import common.WAMException;
 import server.WAM;
 
 /**
@@ -53,6 +54,29 @@ public class WAMGame implements Runnable {
         for (Mole mole : moles) {
             mole.stopGame();
         }
-
     }
+
+    public void GameStat() throws WAMException
+    {
+        if (game.hasTied())
+        {
+            for (WAMPlayer player:players)
+            {
+                player.gameTied();
+            }
+        }
+        else
+        {
+            WAMPlayer player = game.hasWON();
+            player.gameWon();
+            for (WAMPlayer other_player: players)
+            {
+                if(other_player != player)
+                {
+                    other_player.gameLost();
+                }
+            }
+        }
+    }
+
 }
