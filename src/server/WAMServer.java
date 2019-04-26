@@ -49,7 +49,7 @@ public class WAMServer implements Runnable{
     public static void main(String[] args) throws WAMException {
 
         if (args.length != 5) {
-            System.out.println("Usage: java ConnectFourServer <port>");
+            System.out.println("Usage: java WAMServer <port>");
             System.exit(1);
         }
 

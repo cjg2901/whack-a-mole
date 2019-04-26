@@ -157,6 +157,7 @@ public class WAMClient {
     {
         try {
             this.clientSocket.close();
+            this.board.close();
         }
         catch( IOException ioe ) {
             // squash
