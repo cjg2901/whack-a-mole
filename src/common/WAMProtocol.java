@@ -28,7 +28,6 @@ package common;
  * Kamal
  *
  * 1. Updating the GUI with scores and hits, misses scores on client side
- * 2. WAM
  * 3. When whack is received, update guis to show moles go down
  * 4. WAMGame make move
  *

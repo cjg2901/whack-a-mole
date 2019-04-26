@@ -32,6 +32,16 @@ public class WAM
         }
     }
 
+    public void moleUp(int row, int col)
+    {
+        this.board[row-1][col-1] = Mole.MOLE_UP;
+    }
+
+    public void moleDown(int row, int col)
+    {
+        this.board[row-1][col-1] = Mole.MOLE_DOWN;
+    }
+
     public WAMPlayer hasWON()
     {
         int highscore = 0;
