@@ -10,6 +10,11 @@ import java.util.Scanner;
 
 import static common.WAMProtocol.*;
 
+/**
+ * Represents a single player in the game.
+ *
+ * @author Craig Gebo @ cjg2901@rit.edu
+ */
 public class WAMPlayer implements Closeable {
     /**
      * The {@link Socket} used to communicate with the client.
@@ -26,10 +31,15 @@ public class WAMPlayer implements Closeable {
      */
     private PrintStream printer;
 
+    /** The number of rows in the board */
     private int rows;
+    /** The number of columns in the board */
     private int cols;
+    /** The total number of players in the game */
     private int numPlayers;
+    /** A number to represent the player */
     private int playerNumber;
+    /** The player's score */
     public int score;
 
     /**
@@ -58,16 +68,26 @@ public class WAMPlayer implements Closeable {
     }
 
     /**
-     * Sends the initial {@link } request to the client.
+     * Sends the initial WELCOME message to the client.
      */
     public void connect() {
         printer.println(WELCOME + " " + rows + " " + cols + " " + numPlayers + " " + playerNumber);
     }
 
+    /**
+     * Sends a MOLE_UP message to the client with a given mole number.
+     *
+     * @param moleNumber the number of the mole which is up
+     */
     public synchronized void moleUp(int moleNumber) {
         printer.println(MOLE_UP + " " + moleNumber);
     }
 
+    /**
+     * Sends a MOLE_DOWN message to the client with a given mole number.
+     *
+     * @param moleNumber the number of the mole which is down
+     */
     public synchronized void moleDown(int moleNumber) {
         printer.println(MOLE_DOWN + " " + moleNumber);
     }

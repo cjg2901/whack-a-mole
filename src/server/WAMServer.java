@@ -7,7 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * make only one server
+ * A server which connects to the clients, creates all new players and the game.
+ *
+ * @author Craig Gebo @ cjg2901@rit.edu
  */
 
 public class WAMServer implements Runnable{
@@ -64,7 +66,9 @@ public class WAMServer implements Runnable{
     }
 
     /**
-     * Waits for clients to connect. Creates a {@link }
+     * Waits for clients to connect. Creates a new player for each connection,
+     * and adds each player to a list of all players. Once all players have connected,
+     * creates a new game and starts the game.
      */
     @Override
     public void run() {
