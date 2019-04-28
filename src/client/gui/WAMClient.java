@@ -3,7 +3,6 @@ package client.gui;
  * needs to handle GameWon etc messages
  */
 
-import client.gui.WAMBoard;
 import common.WAMException;
 
 import java.io.*;
@@ -37,6 +36,8 @@ public class WAMClient {
     public String[] request1;
 
     public int player_id;
+
+    public int ergebnis;
 
     /**
      * Print method that does something only if DEBUG is true
@@ -193,6 +194,18 @@ public class WAMClient {
                     case ERROR:
                         error( tokens[1] );
                         break;
+                    case SCORE:
+                        updateScore(tokens[1]);
+                        break;
+                    case GAME_LOST:
+                        gameLost();
+                        break;
+                    case GAME_TIED:
+                        gameTied();
+                        break;
+                    case GAME_WON:
+                        gameWon();
+                        break;
                     default:
                         System.err.println("Unrecognized request: " + request);
                         this.stop();
@@ -219,6 +232,36 @@ public class WAMClient {
     {
         int moleid = ((fake_af_i*board.COLS)-1)+fake_af_j;
         this.networkOut.println(WHACK + " " + moleid + " " + this.player_id);
+    }
+
+    public void updateScore(String score)
+    {
+        int wertung = Integer.parseInt(score);
+        this.ergebnis+=wertung;
+    }
+
+    /**
+     * Called when the game has been won by this player.
+     */
+    public void gameWon()
+    {
+        this.board.gameWon();
+    }
+
+    /**
+     * Called when the game has been won by the other player.
+     */
+    public void gameLost()
+    {
+        this.board.gameLost();
+    }
+
+    /**
+     * Called when the game has been tied.
+     */
+    public void gameTied()
+    {
+        this.board.gameTied();
     }
 
 
