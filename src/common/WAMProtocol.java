@@ -33,7 +33,6 @@ package common;
  * Craig
  *
  * 1. Timer
- * 2. Scores on server side
  */
 public interface WAMProtocol {
     /**
