@@ -38,7 +38,6 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     private WAMClient client;
     Label gamestatus = new Label();
     VBox boxyMcboxface = new VBox();
-    Label status = new Label();
     private int Rows;
     private int Cols;
     private int player_id;
@@ -69,11 +68,10 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
             this.Cols = Integer.parseInt(gameinfo[2]);
             this.players = Integer.parseInt(gameinfo[3]);
             this.player_id = Integer.parseInt(gameinfo[4]);
-            status.setText("Your score will be displayed here");
+            gamestatus.setText("Your score will be displayed here");
             this.board = new WAMBoard(this.Rows, this.Cols, this.players);
             this.client.board = this.board;
             this.board.addObserver(this);
-
 
             this.boardarray = new Button[Rows][Cols];
 
@@ -112,7 +110,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         borderpane.setCenter(pane);
         boxyMcboxface.getChildren().addAll(gamestatus);
         borderpane.setBottom(boxyMcboxface);
-        status.setText("SCORE : " + board.Score());
+        gamestatus.setText("SCORE : " + 0);
         Scene scene = new Scene(borderpane);
         stage.setScene(scene);
         stage.setTitle("ConnectFourGUI");
@@ -139,17 +137,23 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         WAMBoard.Status status = board.getStatus();
         switch (status)
         {
-            case ERROR:
-                this.gamestatus.setText( status.toString() );
-                break;
+//            case ERROR:
+//                this.gamestatus.setText(status.toString());
+//                break;
             case I_WON:
                 this.gamestatus.setText( "You won. Yay!" );
+                this.stop();
                 break;
             case I_LOST:
                 this.gamestatus.setText( "You lost. Boo!" );
+                this.stop();
                 break;
             case TIE:
                 this.gamestatus.setText( "Tie game. Meh." );
+                this.stop();
+                break;
+            case NOT_OVER:
+                this.gamestatus.setText("Score: " + client.ergebnis);
                 break;
             default:
                 this.gamestatus.setText(" ");
@@ -183,7 +187,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
 
     /**
      * update method that calls refresh and ensures only Javafx threads run
-     * @param wamBoard
+     * @param wamBoard j
      */
     @Override
     public void update(WAMBoard wamBoard)
@@ -200,7 +204,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
 
     /**
      * Main method
-     * @param args
+     * @param args j
      */
     public static void main(String[] args)
     {

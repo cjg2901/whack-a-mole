@@ -195,16 +195,19 @@ public class WAMClient {
                         error( tokens[1] );
                         break;
                     case SCORE:
-                        updateScore(tokens[1]);
+                        updateScore(tokens[player_id+1]);
                         break;
                     case GAME_LOST:
                         gameLost();
+                        close();
                         break;
                     case GAME_TIED:
                         gameTied();
+                        close();
                         break;
                     case GAME_WON:
                         gameWon();
+                        close();
                         break;
                     default:
                         System.err.println("Unrecognized request: " + request);
@@ -230,8 +233,6 @@ public class WAMClient {
 
     public void Whack(int fake_af_i, int fake_af_j)
     {
-        System.out.println(fake_af_i);
-        System.out.println(fake_af_j);
         int moleid = (((fake_af_i)*board.COLS))+(fake_af_j);
         this.networkOut.println(WHACK + " " + moleid + " " + this.player_id);
     }
@@ -239,7 +240,7 @@ public class WAMClient {
     public void updateScore(String score)
     {
         int wertung = Integer.parseInt(score);
-        this.ergebnis+=wertung;
+        this.ergebnis = wertung;
     }
 
     /**
