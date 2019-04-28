@@ -30,7 +30,7 @@ package common;
  * 1. Updating the GUI with scores and hits, misses scores on client side
  * 3. When whack is received, update guis to show moles go down
  *
- * Chris
+ * Craig
  *
  * 1. Timer
  * 2. Scores on server side

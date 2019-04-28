@@ -6,6 +6,7 @@ import common.WAMException;
  * Represents the entire game on the server side.
  *
  * @author Craig Gebo @ cjg2901@rit.edu
+ * @author srikamal @kvc9128@g.rit.edu
  */
 
 public class WAMGame implements Runnable {

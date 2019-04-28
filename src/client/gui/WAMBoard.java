@@ -164,15 +164,15 @@ public class WAMBoard
         alertObservers();
     }
 
-    /**
-     * to let the players send a whack message
-     */
-    public void Wack(int col, int row)
-    {
-        this.board[row][col] = Mole.MOLE_DOWN;
-        alertObservers();
-        //contact server somehow
-    }
+//    /**
+//     * to let the players send a whack message
+//     */
+//    public void Wack(int col, int row)
+//    {
+//        this.board[row][col] = Mole.MOLE_DOWN;
+//        alertObservers();
+//        //contact server somehow
+//    }
 
     public void Error(String arguments)
     {

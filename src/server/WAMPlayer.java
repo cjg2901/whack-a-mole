@@ -119,6 +119,8 @@ public class WAMPlayer implements Closeable {
         printer.println(GAME_TIED);
     }
 
+    //make a function to handle whack messages
+
     /**
      * Called to send an ERROR to the client. This is called if either
      * client has invalidated themselves with a bad response.

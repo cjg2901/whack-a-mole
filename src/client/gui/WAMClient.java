@@ -69,6 +69,7 @@ public class WAMClient {
         this.go = false;
     }
 
+
     /**
      * Creates a new client.
      *
@@ -101,6 +102,7 @@ public class WAMClient {
         }
     }
 
+
     /**
      * Throws an error and stops the game.
      * @param arguments
@@ -109,6 +111,7 @@ public class WAMClient {
         this.board.Error( arguments );
         this.stop();
     }
+
 
     /**
      * Called from the GUI when it is ready to start receiving messages
@@ -135,6 +138,7 @@ public class WAMClient {
         this.board.moleUp(row, col);
     }
 
+
     /**
      * Called when the client received a message from the server that
      * a mole is down.
@@ -152,6 +156,7 @@ public class WAMClient {
         // Update the board model.
         this.board.moleDown(row, col);
     }
+
 
     /**
      * Closes the socket to the server.
@@ -209,11 +214,11 @@ public class WAMClient {
         this.close();
     }
 
+
     public void Whack(int fake_af_i, int fake_af_j)
     {
         int moleid = ((fake_af_i*board.COLS)-1)+fake_af_j;
         this.networkOut.println(WHACK + " " + moleid + " " + this.player_id);
-        this.board.Wack(fake_af_i,fake_af_j);
     }
 
 
