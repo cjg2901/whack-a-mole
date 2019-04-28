@@ -230,7 +230,7 @@ public class WAMClient {
 
     public void Whack(int fake_af_i, int fake_af_j)
     {
-        int moleid = ((fake_af_i*board.COLS)-1)+fake_af_j;
+        int moleid = ((fake_af_i*board.COLS))+fake_af_j;
         this.networkOut.println(WHACK + " " + moleid + " " + this.player_id);
     }
 
