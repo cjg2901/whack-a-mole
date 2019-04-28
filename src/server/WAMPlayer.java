@@ -76,6 +76,7 @@ public class WAMPlayer implements Closeable, Runnable {
      */
     public void connect() {
         printer.println(WELCOME + " " + rows + " " + cols + " " + numPlayers + " " + playerNumber);
+        printer.flush();
     }
 
     public void setgame(WAMGame game)
@@ -90,6 +91,7 @@ public class WAMPlayer implements Closeable, Runnable {
      */
     public synchronized void moleUp(int moleNumber) {
         printer.println(MOLE_UP + " " + moleNumber);
+        printer.flush();
     }
 
     /**
@@ -99,6 +101,7 @@ public class WAMPlayer implements Closeable, Runnable {
      */
     public synchronized void moleDown(int moleNumber) {
         printer.println(MOLE_DOWN + " " + moleNumber);
+        printer.flush();
     }
 
     /**
@@ -108,6 +111,7 @@ public class WAMPlayer implements Closeable, Runnable {
      */
     public void gameWon() {
         printer.println(GAME_WON);
+        printer.flush();
 
     }
 
@@ -118,6 +122,7 @@ public class WAMPlayer implements Closeable, Runnable {
      */
     public void gameLost()  {
         printer.println(GAME_LOST);
+        printer.flush();
     }
 
     /**
@@ -126,6 +131,7 @@ public class WAMPlayer implements Closeable, Runnable {
      */
     public void gameTied()  {
         printer.println(GAME_TIED);
+        printer.flush();
     }
 
     //make a function to handle whack messages
@@ -138,6 +144,7 @@ public class WAMPlayer implements Closeable, Runnable {
      */
     public void error(String message) {
         printer.println(ERROR + " " + message);
+        printer.flush();
     }
 
     /**
@@ -164,9 +171,22 @@ public class WAMPlayer implements Closeable, Runnable {
                 String request = this.scanner.nextLine();
                 String[] tokens = request.split(" ");
                 System.out.println(request);
-                if (tokens[0] == WHACK)
+                if (tokens[0].equals(WHACK))
                 {
-
+                    if (game.getGame().isMoleUP(Integer.parseInt(tokens[1])))
+                    {
+                        this.score += 2;
+                        printer.println(SCORE + " " + this.score);
+                        printer.flush();
+                        printer.println(MOLE_DOWN + " " + tokens[1]);
+                        printer.flush();
+                    }
+                    else
+                    {
+                        this.score -= 1;
+                        printer.println(SCORE + " " + this.score);
+                        printer.flush();
+                    }
                 }
             }
         }
