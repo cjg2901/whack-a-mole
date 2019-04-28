@@ -48,8 +48,7 @@ public class WAMGame implements Runnable {
      * after the game is over it stops all of the moles.
      */
     @Override
-    public void run()
-    {
+    public void run() {
         System.out.println("Game started");
         for (int i=0; i < rows*cols; i++) {
             Mole mole = new Mole(i, players);
@@ -59,8 +58,13 @@ public class WAMGame implements Runnable {
         synchronized(this) {
             try {
                 wait(duration * 1000);
+                GameStat();
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+            catch (WAMException wame)
+            {
+                wame.printStackTrace();
             }
         }
         System.out.println("Game over");

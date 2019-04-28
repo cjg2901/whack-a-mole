@@ -38,6 +38,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     private WAMClient client;
     Label gamestatus = new Label();
     VBox boxyMcboxface = new VBox();
+    Label status = new Label();
     private int Rows;
     private int Cols;
     private int player_id;
@@ -68,7 +69,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
             this.Cols = Integer.parseInt(gameinfo[2]);
             this.players = Integer.parseInt(gameinfo[3]);
             this.player_id = Integer.parseInt(gameinfo[4]);
-
+            status.setText("Your score will be displayed here");
             this.board = new WAMBoard(this.Rows, this.Cols, this.players);
             this.client.board = this.board;
             this.board.addObserver(this);
@@ -109,10 +110,9 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         header.setText("\t\t\t\t\t  Welcome to Whack A Mole");
         borderpane.setTop(header);
         borderpane.setCenter(pane);
-        ImageView back = (new ImageView(this.Background));
         boxyMcboxface.getChildren().addAll(gamestatus);
         borderpane.setBottom(boxyMcboxface);
-
+        status.setText("SCORE : " + board.Score());
         Scene scene = new Scene(borderpane);
         stage.setScene(scene);
         stage.setTitle("ConnectFourGUI");

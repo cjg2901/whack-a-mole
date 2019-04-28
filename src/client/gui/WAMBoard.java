@@ -184,9 +184,9 @@ public class WAMBoard
     /**
      * initializing the score
      */
-    public void Score(String score)
+    public String Score()
     {
-        this.Score = score;
+        return this.Score;
     }
 
     /**
