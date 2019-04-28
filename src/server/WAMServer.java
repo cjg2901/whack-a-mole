@@ -62,7 +62,6 @@ public class WAMServer implements Runnable{
         server.numPlayers = Integer.parseInt(args[3]);
         server.duration = Integer.parseInt(args[4]);
         server.run();
-
     }
 
     /**

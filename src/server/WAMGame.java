@@ -63,14 +63,20 @@ public class WAMGame implements Runnable {
         synchronized(this) {
             try {
                 wait(duration * 1000);
-                GameStat();
-            } catch (InterruptedException | WAMException e) {
-                e.printStackTrace();
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
             }
+        }
+        try { GameStat(); }
+        catch(WAMException wame) {
+            wame.printStackTrace();
         }
         System.out.println("Game over");
         for (Mole mole : moles) {
             mole.stopGame();
+        }
+        for (WAMPlayer player: players) {
+            player.close();
         }
     }
 

@@ -156,7 +156,6 @@ public class WAMPlayer implements Closeable, Runnable {
             sock.close();
         }
         catch(IOException ioe) {
-            // squash
         }
     }
 
@@ -176,8 +175,6 @@ public class WAMPlayer implements Closeable, Runnable {
                     if (game.getGame().isMoleUP(Integer.parseInt(tokens[1])))
                     {
                         this.score += 2;
-                        printer.println(SCORE + " " + this.score);
-                        printer.flush();
                         for (WAMPlayer player:players)
                         {
                             player.printer.println(MOLE_DOWN + " " + tokens[1]);
@@ -187,8 +184,14 @@ public class WAMPlayer implements Closeable, Runnable {
                     else
                     {
                         this.score -= 1;
-                        printer.println(SCORE + " " + this.score);
-                        printer.flush();
+                    }
+                    String scoreMessage = SCORE;
+                    for (WAMPlayer player : players) {
+                        scoreMessage += " " + player.score;
+                    }
+                    for (WAMPlayer player : players) {
+                        player.printer.println(scoreMessage);
+                        player.printer.flush();
                     }
                 }
             }
