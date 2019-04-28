@@ -11,6 +11,10 @@ import java.util.List;
  */
 public class WAMBoard
 {
+    public int ROWS;
+    public int COLS;
+    public int Players;
+    public String Score;
 
     /**
      * Used to keep track of the Mole status on the board
@@ -26,10 +30,6 @@ public class WAMBoard
     /**
      * useful variables
      */
-    public int ROWS;
-    public int COLS;
-    public int Players;
-    public String Score;
 
     /**
      * the observers of this model

@@ -3,7 +3,7 @@ package client.gui;
  * needs to handle GameWon etc messages
  */
 
-import common.WAMProtocol;
+import client.gui.WAMBoard;
 import common.WAMException;
 
 import java.io.*;
@@ -209,6 +209,7 @@ public class WAMClient {
     public void Whack(int fake_af_i, int fake_af_j)
     {
         this.board.Wack(fake_af_i,fake_af_j);
+        this.networkOut.println(WHACK + ((fake_af_i)-1)+fake_af_j);
         //handles whacking sends a whack
     }
 
