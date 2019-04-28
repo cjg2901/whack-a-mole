@@ -34,6 +34,10 @@ public class WAMClient {
     /** the model which keeps track of the game */
     public WAMBoard board;
 
+    public String[] request1;
+
+    public int player_id;
+
     /**
      * Print method that does something only if DEBUG is true
      *
@@ -46,8 +50,6 @@ public class WAMClient {
             System.out.println( logMsg );
         }
     }
-
-    public String arguments;
 
     /** sentinel loop used to control the main loop */
     private boolean go = true;
@@ -84,11 +86,12 @@ public class WAMClient {
             this.board = board;
 
             //block waiting for welcome message from server
-            String request = this.networkIn.next();
-            this.arguments = this.networkIn.nextLine();
-            if(!request.equals(WELCOME))
+            String request = this.networkIn.nextLine();
+            request1 = request.split(" ");
+            player_id = Integer.parseInt(request1[request1.length-1]);
+            if(!request1[0].equals(WELCOME))
             {
-                throw new WAMException("Expected CONNECT from server");
+                throw new WAMException("Expected WELCOME from server");
             }
             WAMClient.dPrint("Connected to server " + this.clientSocket);
         }
@@ -208,9 +211,9 @@ public class WAMClient {
 
     public void Whack(int fake_af_i, int fake_af_j)
     {
+        int moleid = ((fake_af_i*board.COLS)-1)+fake_af_j;
+        this.networkOut.println(WHACK + " " + moleid + " " + this.player_id);
         this.board.Wack(fake_af_i,fake_af_j);
-        this.networkOut.println(WHACK + ((fake_af_i)-1)+fake_af_j);
-        //handles whacking sends a whack
     }
 
 

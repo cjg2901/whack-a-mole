@@ -40,7 +40,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     VBox boxyMcboxface = new VBox();
     private int Rows;
     private int Cols;
-    private int duration;
+    private int player_id;
     private int players;
     Button[][] boardarray;
     GridPane pane;
@@ -63,12 +63,11 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
             this.Background = new Image("client/gui/WAM-bg.png");
 
             this.client = new WAMClient(host, port, this.board);
-            String arguments = client.arguments;
-            String[] gameinfo = arguments.split(" ");
+            String[] gameinfo = client.request1;
             this.Rows = Integer.parseInt(gameinfo[1]);
             this.Cols = Integer.parseInt(gameinfo[2]);
             this.players = Integer.parseInt(gameinfo[3]);
-            this.duration = Integer.parseInt(gameinfo[4]);
+            this.player_id = Integer.parseInt(gameinfo[4]);
 
             this.board = new WAMBoard(this.Rows, this.Cols, this.players);
             this.client.board = this.board;

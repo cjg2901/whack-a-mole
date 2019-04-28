@@ -169,7 +169,6 @@ public class WAMBoard
      */
     public void Wack(int col, int row)
     {
-        //hit at location board[row][col]
         this.board[row][col] = Mole.MOLE_DOWN;
         alertObservers();
         //contact server somehow

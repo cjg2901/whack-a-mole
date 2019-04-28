@@ -64,8 +64,7 @@ public class WAMServer implements Runnable{
     }
 
     /**
-     * Waits for two clients to connect. Creates a {@link }
-     * for each and then pairs them off in a {@link }.<P>
+     * Waits for clients to connect. Creates a {@link }
      */
     @Override
     public void run() {
