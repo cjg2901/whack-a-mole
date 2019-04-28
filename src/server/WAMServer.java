@@ -83,6 +83,9 @@ public class WAMServer implements Runnable{
                 System.out.println("Player " + i + " connected!");
             }
             System.out.println("Starting game!");
+            for (WAMPlayer player : players) {
+                player.setPlayers(players);
+            }
             WAMGame game = new WAMGame(rows, cols, duration, players);
             // server is not multithreaded
             new Thread(game).start();

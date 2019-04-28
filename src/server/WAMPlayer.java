@@ -15,7 +15,7 @@ import static common.WAMProtocol.*;
  *
  * @author Craig Gebo @ cjg2901@rit.edu
  */
-public class WAMPlayer implements Closeable {
+public class WAMPlayer implements Closeable, Runnable {
     /**
      * The {@link Socket} used to communicate with the client.
      */
@@ -42,6 +42,8 @@ public class WAMPlayer implements Closeable {
     /** The player's score */
     public int score;
 
+    private WAMPlayer[] players;
+
     /**
      * Creates a new {@link WAMPlayer} that will use the specified
      * {@link Socket} to communicate with the client.
@@ -65,6 +67,10 @@ public class WAMPlayer implements Closeable {
         this.numPlayers = numPlayers;
         this.playerNumber = playerNumber;
         this.score = 0;
+    }
+
+    public void setPlayers(WAMPlayer[] players) {
+        this.players = players;
     }
 
     /**
@@ -132,10 +138,6 @@ public class WAMPlayer implements Closeable {
     }
 
     /**
-     * Whack message handling
-     */
-
-    /**
      * Called to close the client connection after the game is over.
      */
     @Override
@@ -145,6 +147,21 @@ public class WAMPlayer implements Closeable {
         }
         catch(IOException ioe) {
             // squash
+        }
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            String request = this.scanner.nextLine();
+            String[] tokens = request.split(" ");
+            System.out.println(request);
+            switch (tokens[0]) {
+                case WHACK:
+                    for (WAMPlayer player : players){
+                        player.moleDown(Integer.parseInt(tokens[1]));
+                    }
+            }
         }
     }
 }

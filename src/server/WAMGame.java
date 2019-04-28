@@ -51,7 +51,7 @@ public class WAMGame implements Runnable {
     public void run() {
         System.out.println("Game started");
         for (int i=0; i < rows*cols; i++) {
-            Mole mole = new Mole(i, players);
+            Mole mole = new Mole(i, players, game);
             moles[i] = mole;
             mole.start();
         }
@@ -59,12 +59,8 @@ public class WAMGame implements Runnable {
             try {
                 wait(duration * 1000);
                 GameStat();
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | WAMException e) {
                 e.printStackTrace();
-            }
-            catch (WAMException wame)
-            {
-                wame.printStackTrace();
             }
         }
         System.out.println("Game over");

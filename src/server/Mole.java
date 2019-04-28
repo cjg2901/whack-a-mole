@@ -1,6 +1,8 @@
 package server;
 import java.util.Random;
 
+import static java.lang.Math.floor;
+
 /**
  * Class represents the moles which independently and randomly go up
  * and down.
@@ -16,16 +18,19 @@ public class Mole extends Thread {
     /** Whether or not the game is running */
     private boolean gameRunning;
 
+    private WAM game;
+
     /**
      * Creates a new mole
      *
      * @param moleNumber the number of the mole in the game
      * @param players the players of the game
      */
-    public Mole(int moleNumber, WAMPlayer[] players) {
+    public Mole(int moleNumber, WAMPlayer[] players, WAM game) {
         this.moleNumber = moleNumber;
         this.players = players;
         this.gameRunning = true;
+        this.game = game;
     }
 
     /**
@@ -51,6 +56,9 @@ public class Mole extends Thread {
             }
             for (WAMPlayer player : players) {
                 player.moleUp(moleNumber);
+                int row = (int) floor((double) moleNumber / (double) game.getCols()) + 1;
+                int col = (moleNumber % game.getCols()) + 1;
+                game.moleUp(row, col);
             }
 
             try {
@@ -60,6 +68,9 @@ public class Mole extends Thread {
             }
             for (WAMPlayer player : players) {
                 player.moleDown(moleNumber);
+                int row = (int) floor((double) moleNumber / (double) game.getCols()) + 1;
+                int col = (moleNumber % game.getCols()) + 1;
+                game.moleDown(row, col);
             }
         }
     }
