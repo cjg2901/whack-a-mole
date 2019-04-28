@@ -6,6 +6,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import static common.WAMProtocol.*;
@@ -21,11 +22,7 @@ public class WAMPlayer implements Closeable, Runnable {
      */
     private Socket sock;
 
-    /**
-     * The {@link Scanner} used to read responses from the client.
-     */
     private Scanner scanner;
-
     /**
      * The {@link PrintStream} used to send requests to the client.
      */
@@ -44,6 +41,8 @@ public class WAMPlayer implements Closeable, Runnable {
 
     private WAMPlayer[] players;
 
+    private WAMGame game;
+
     /**
      * Creates a new {@link WAMPlayer} that will use the specified
      * {@link Socket} to communicate with the client.
@@ -56,7 +55,6 @@ public class WAMPlayer implements Closeable, Runnable {
     public WAMPlayer(Socket sock, int rows, int cols, int numPlayers, int playerNumber) throws WAMException {
         this.sock = sock;
         try {
-            scanner = new Scanner(sock.getInputStream());
             printer = new PrintStream(sock.getOutputStream());
         }
         catch (IOException e) {
@@ -78,6 +76,11 @@ public class WAMPlayer implements Closeable, Runnable {
      */
     public void connect() {
         printer.println(WELCOME + " " + rows + " " + cols + " " + numPlayers + " " + playerNumber);
+    }
+
+    public void setgame(WAMGame game)
+    {
+        this.game = game;
     }
 
     /**
@@ -151,17 +154,31 @@ public class WAMPlayer implements Closeable, Runnable {
     }
 
     @Override
-    public void run() {
-        while (true) {
-            String request = this.scanner.nextLine();
-            String[] tokens = request.split(" ");
-            System.out.println(request);
-            switch (tokens[0]) {
-                case WHACK:
-                    for (WAMPlayer player : players){
-                        player.moleDown(Integer.parseInt(tokens[1]));
-                    }
+    public void run()
+    {
+        try {
+            scanner = new Scanner(sock.getInputStream());
+            printer = new PrintStream(sock.getOutputStream());
+            while (true)
+            {
+                String request = this.scanner.nextLine();
+                String[] tokens = request.split(" ");
+                System.out.println(request);
+                if (tokens[0] == WHACK)
+                {
+
+                }
             }
+        }
+        catch (IOException e) {
+            try {
+                throw new WAMException(e);
+            } catch (WAMException ex) {
+                ex.printStackTrace();
+            }
+        } catch (NoSuchElementException nse)
+        {
+            nse.printStackTrace();
         }
     }
 }

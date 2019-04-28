@@ -88,6 +88,10 @@ public class WAMServer implements Runnable{
                 player.setPlayers(players);
             }
             WAMGame game = new WAMGame(rows, cols, duration, players);
+            for (WAMPlayer player:players)
+            {
+                player.setgame(game);
+            }
             // server is not multithreaded
             new Thread(game).start();
         } catch (IOException e) {

@@ -43,6 +43,11 @@ public class WAMGame implements Runnable {
         this.game = new WAM(rows, cols, players);
     }
 
+    public WAM getGame()
+    {
+        return this.game;
+    }
+
     /**
      * Starts the game, waits for the duration of the game,
      * after the game is over it stops all of the moles.

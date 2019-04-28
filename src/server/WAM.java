@@ -3,6 +3,7 @@ package server;
 import client.gui.WAMBoard;
 
 import static common.WAMProtocol.*;
+import static java.lang.Math.floor;
 
 public class WAM
 {
@@ -32,6 +33,13 @@ public class WAM
                 board[row][col] = Mole.MOLE_DOWN;
             }
         }
+    }
+
+    public boolean isMoleUP(int moleID)
+    {
+        int row = (int) floor((double) moleID / (double) COLS) + 1;
+        int col = (moleID % COLS) + 1;
+        return (board[row][col].equals(Mole.MOLE_UP));
     }
 
     public int getRows() {
