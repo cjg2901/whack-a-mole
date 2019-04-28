@@ -197,6 +197,6 @@ public class WAMBoard
      */
     public Mole getContents(int row, int col)
     {
-        return this.board[col][row];
+        return this.board[row][col];
     }
 }

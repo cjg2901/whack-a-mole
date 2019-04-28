@@ -37,8 +37,10 @@ public class WAM
 
     public boolean isMoleUP(int moleID)
     {
-        int row = (int) floor((double) moleID / (double) COLS) + 1;
-        int col = (moleID % COLS) + 1;
+        int row = (int) floor((double) moleID / (double) COLS) ;
+        System.out.println(row);
+        int col = (moleID % COLS) ;
+        System.out.println(col);
         return (board[row][col].equals(Mole.MOLE_UP));
     }
 

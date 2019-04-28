@@ -75,7 +75,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
             this.board.addObserver(this);
 
 
-            this.boardarray = new Button[Cols][Rows];
+            this.boardarray = new Button[Rows][Cols];
 
         }
         catch (WAMException wame)
@@ -94,16 +94,16 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     {
         BorderPane borderpane = new BorderPane();
         pane = new GridPane();
-        for(int i = 0; i < Cols; i++)
+        for(int i = 0; i < Rows; i++)
         {
-            for(int j = 0; j < Rows; j++)
+            for(int j = 0; j < Cols; j++)
             {
                 int fake_af_i = i;
                 int fake_af_j = j;
                 boardarray[i][j] = new Button();
                 boardarray[i][j].setOnAction(e -> client.Whack(fake_af_i,fake_af_j));
                 boardarray[i][j].setGraphic(new ImageView(this.MOLE_DOWN));
-                pane.add(boardarray[i][j], i, j);
+                pane.add(boardarray[i][j], j, i);
             }
         }
         Label header = new Label();
@@ -162,9 +162,9 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
      */
     private void help_refresh()
     {
-        for(int i = 0; i < Cols; i++)
+        for(int i = 0; i < Rows; i++)
         {
-            for(int j = 0; j < Rows; j++)
+            for(int j = 0; j < Cols; j++)
             {
                 WAMBoard.Mole mole = board.getContents(i,j);
                 if(mole == WAMBoard.Mole.MOLE_UP)

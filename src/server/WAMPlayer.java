@@ -178,8 +178,11 @@ public class WAMPlayer implements Closeable, Runnable {
                         this.score += 2;
                         printer.println(SCORE + " " + this.score);
                         printer.flush();
-                        printer.println(MOLE_DOWN + " " + tokens[1]);
-                        printer.flush();
+                        for (WAMPlayer player:players)
+                        {
+                            player.printer.println(MOLE_DOWN + " " + tokens[1]);
+                            player.printer.flush();
+                        }
                     }
                     else
                     {
