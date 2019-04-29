@@ -43,6 +43,8 @@ public class WAMPlayer implements Closeable, Runnable {
 
     private WAMGame game;
 
+    private boolean gameRunning;
+
     /**
      * Creates a new {@link WAMPlayer} that will use the specified
      * {@link Socket} to communicate with the client.
@@ -65,6 +67,7 @@ public class WAMPlayer implements Closeable, Runnable {
         this.numPlayers = numPlayers;
         this.playerNumber = playerNumber;
         this.score = 0;
+        this.gameRunning = true;
     }
 
     public void setPlayers(WAMPlayer[] players) {
@@ -82,6 +85,10 @@ public class WAMPlayer implements Closeable, Runnable {
     public void setgame(WAMGame game)
     {
         this.game = game;
+    }
+
+    public void stopGame() {
+        this.gameRunning = false;
     }
 
     /**
@@ -165,7 +172,7 @@ public class WAMPlayer implements Closeable, Runnable {
         try {
             scanner = new Scanner(sock.getInputStream());
             printer = new PrintStream(sock.getOutputStream());
-            while (true)
+            while (gameRunning)
             {
                 String request = this.scanner.nextLine();
                 String[] tokens = request.split(" ");

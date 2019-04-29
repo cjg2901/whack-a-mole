@@ -76,6 +76,7 @@ public class WAMGame implements Runnable {
             mole.stopGame();
         }
         for (WAMPlayer player: players) {
+            player.stopGame();
             player.close();
         }
     }
