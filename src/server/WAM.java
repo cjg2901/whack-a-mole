@@ -3,21 +3,25 @@ package server;
 import static java.lang.Math.floor;
 
 /**
+ * Keeps track of which moles are up and down on the server side.\
  *
+ * @author Sri Kamal
+ * @author Craig Gebo
  */
 public class WAM
 {
-    /**  */
-    private int ROWS;
-    /**  */
-    private int COLS;
-    /**  */
+    /** The number of rows */
+    private final int ROWS;
+    /** The number of columns */
+    private final int COLS;
+    /** List of all moles */
     private Mole[][] board;
-    /**  */
+    /** List of all players */
     private WAMPlayer[] players;
 
     /**
-     *
+     * Represents whether or not a mole is currently
+     * up or down.
      */
     private enum Mole
     {
@@ -25,10 +29,11 @@ public class WAM
     }
 
     /**
+     * Creates a new WAM.
      *
-     * @param rows
-     * @param cols
-     * @param players
+     * @param rows number of rows
+     * @param cols number of columns
+     * @param players list of players
      */
     public WAM(int rows, int cols, WAMPlayer[] players)
     {
@@ -37,7 +42,7 @@ public class WAM
         this.board = new Mole[rows][cols];
         this.players = players;
 
-        for(int col=0; col<COLS; col++)
+        for(int col=0; col < COLS; col++)
         {
             for(int row=0; row < ROWS; row++)
             {
@@ -47,9 +52,10 @@ public class WAM
     }
 
     /**
+     * Checks whether or not a mole is up.
      *
-     * @param moleID
-     * @return
+     * @param moleID the ID of the mole
+     * @return true if the mole is up, false otherwise
      */
     public boolean isMoleUp(int moleID)
     {
@@ -61,17 +67,19 @@ public class WAM
     }
 
     /**
+     * Gets the number of columns.
      *
-     * @return
+     * @return the number of columns
      */
     public int getCols() {
         return this.COLS;
     }
 
     /**
+     * Sets a mole to be up at a given position.
      *
-     * @param row
-     * @param col
+     * @param row the row
+     * @param col the column
      */
     public void moleUp(int row, int col)
     {
@@ -79,9 +87,10 @@ public class WAM
     }
 
     /**
+     * Sets a mole to be down at a given position.
      *
-     * @param row
-     * @param col
+     * @param row the row
+     * @param col the column
      */
     public void moleDown(int row, int col)
     {
@@ -89,8 +98,9 @@ public class WAM
     }
 
     /**
+     * Checks which player won the game.
      *
-     * @return
+     * @return the player which won the game
      */
     public WAMPlayer hasWon()
     {
@@ -113,8 +123,9 @@ public class WAM
     }
 
     /**
+     * Checks if the game was a tie.
      *
-     * @return
+     * @return true if there was a tie, false otherwise.
      */
     public boolean hasTied()
     {

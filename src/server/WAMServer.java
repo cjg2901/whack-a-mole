@@ -9,7 +9,8 @@ import java.net.Socket;
 /**
  * A server which connects to the clients, creates all new players and the game.
  *
- * @author Craig Gebo @ cjg2901@rit.edu
+ * @author Craig Gebo
+ * @author Sri Kamal
  */
 
 public class WAMServer implements Runnable{
@@ -17,10 +18,15 @@ public class WAMServer implements Runnable{
      * The {@link ServerSocket} used to wait for incoming client connections.
      */
     private ServerSocket server;
+    /** The number of rows */
     private int rows;
+    /** The number of columns */
     private int cols;
+    /** The duration of the game */
     private int duration;
+    /** The number of players */
     private int numPlayers;
+    /** List of all players */
     public WAMPlayer[] players;
 
     /**
@@ -89,7 +95,7 @@ public class WAMServer implements Runnable{
             WAMGame game = new WAMGame(rows, cols, duration, players);
             for (WAMPlayer player:players)
             {
-                player.setgame(game);
+                player.setGame(game);
             }
             new Thread(game).start();
         } catch (IOException e) {

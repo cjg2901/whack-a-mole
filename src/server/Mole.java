@@ -7,7 +7,8 @@ import static java.lang.Math.floor;
  * Class represents the moles which independently and randomly go up
  * and down.
  *
- * @author Craig Gebo @ cjg2901@rit.edu
+ * @author Craig Gebo
+ * @author Sri Kamal
  */
 public class Mole extends Thread {
 
@@ -17,11 +18,11 @@ public class Mole extends Thread {
     private WAMPlayer[] players;
     /** Whether or not the game is running */
     private boolean gameRunning;
-
+    /** The game which keeps track of which moles are up or down */
     private WAM game;
 
     /**
-     * Creates a new mole
+     * Creates a new mole.
      *
      * @param moleNumber the number of the mole in the game
      * @param players the players of the game

@@ -14,14 +14,17 @@ import static common.WAMProtocol.*;
 /**
  * Represents a single player in the game.
  *
- * @author Craig Gebo @ cjg2901@rit.edu
+ * @author Craig Gebo
+ * @author Sri Kamal
  */
 public class WAMPlayer implements Closeable, Runnable {
     /**
      * The {@link Socket} used to communicate with the client.
      */
     private Socket sock;
-
+    /**
+     * The {@link Scanner} used to receive messages from the client.
+     */
     private Scanner scanner;
     /**
      * The {@link PrintStream} used to send requests to the client.
@@ -38,11 +41,11 @@ public class WAMPlayer implements Closeable, Runnable {
     private int playerNumber;
     /** The player's score */
     public int score;
-
+    /** The list of players */
     private WAMPlayer[] players;
-
+    /** The game */
     private WAMGame game;
-
+    /** Whether or not the game is running */
     private boolean gameRunning;
 
     /**
@@ -70,6 +73,11 @@ public class WAMPlayer implements Closeable, Runnable {
         this.gameRunning = true;
     }
 
+    /**
+     * Sets the players to the list of all players.
+     *
+     * @param players list of players
+     */
     public void setPlayers(WAMPlayer[] players) {
         this.players = players;
     }
@@ -82,11 +90,19 @@ public class WAMPlayer implements Closeable, Runnable {
         printer.flush();
     }
 
-    public void setgame(WAMGame game)
+    /**
+     * Sets the game to a given game.
+     *
+     * @param game the game
+     */
+    public void setGame(WAMGame game)
     {
         this.game = game;
     }
 
+    /**
+     * Stops the game.
+     */
     public void stopGame() {
         this.gameRunning = false;
     }
@@ -141,19 +157,6 @@ public class WAMPlayer implements Closeable, Runnable {
         printer.flush();
     }
 
-    //make a function to handle whack messages
-
-    /**
-     * Called to send an ERROR to the client. This is called if either
-     * client has invalidated themselves with a bad response.
-     *
-     * @param message The error message.
-     */
-    public void error(String message) {
-        printer.println(ERROR + " " + message);
-        printer.flush();
-    }
-
     /**
      * Called to close the client connection after the game is over.
      */
@@ -162,10 +165,13 @@ public class WAMPlayer implements Closeable, Runnable {
         try {
             sock.close();
         }
-        catch(IOException ioe) {
-        }
+        catch(IOException ioe) {}
     }
 
+    /**
+     * While the game is running, gets WHACK messages from the client
+     * and updates the score and server accordingly.
+     */
     @Override
     public void run()
     {
@@ -209,9 +215,6 @@ public class WAMPlayer implements Closeable, Runnable {
             } catch (WAMException ex) {
                 ex.printStackTrace();
             }
-        } catch (NoSuchElementException nse)
-        {
-            //nse.printStackTrace();
-        }
+        } catch (NoSuchElementException nse) {}
     }
 }

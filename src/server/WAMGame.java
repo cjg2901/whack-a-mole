@@ -19,7 +19,6 @@ public class WAMGame implements Runnable {
     private int cols;
     /** The duration of the game in seconds */
     private int duration;
-
     /** the game model */
     private WAM game;
 
