@@ -14,7 +14,6 @@ public class WAMBoard
     public int ROWS;
     public int COLS;
     public int Players;
-    public String Score;
 
     /**
      * Used to keep track of the Mole status on the board
@@ -28,10 +27,6 @@ public class WAMBoard
     private Mole[][] board;
 
     /**
-     * useful variables
-     */
-
-    /**
      * the observers of this model
      */
     private List<Observer<WAMBoard>> observers;
@@ -42,7 +37,7 @@ public class WAMBoard
     private Status status;
 
     /**
-     * constructor
+     * Creates a new board.
      */
     public WAMBoard(int rows, int cols, int players)
     {
@@ -98,14 +93,6 @@ public class WAMBoard
     }
 
     /**
-     * The user may close at any time.
-     */
-    public void close()
-    {
-        //alertObservers();
-    }
-
-    /**
      * Called when the game has been won by this player.
      */
     public void gameWon()
@@ -150,18 +137,13 @@ public class WAMBoard
         alertObservers();
     }
 
-    public void error(String arguments)
+    /**
+     *
+     */
+    public void error()
     {
         this.status = Status.ERROR;
         alertObservers();
-    }
-
-    /**
-     * initializing the score
-     */
-    public String Score()
-    {
-        return this.Score;
     }
 
     /**

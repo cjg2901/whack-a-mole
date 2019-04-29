@@ -24,6 +24,7 @@ import java.util.List;
 /**
  * A JavaFX GUI for the networked Whack-A-Mole Game
  * @author Sri Kamal
+ * @author Craig Gebo
  */
 public class WAMGUI extends Application implements Observer<WAMBoard>
 {
@@ -40,7 +41,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     VBox boxyMcboxface = new VBox();
     private int Rows;
     private int Cols;
-    private int player_id;
+    private int playerid;
     private int players;
     Button[][] boardarray;
     GridPane pane;
@@ -67,7 +68,7 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
             this.Rows = Integer.parseInt(gameinfo[1]);
             this.Cols = Integer.parseInt(gameinfo[2]);
             this.players = Integer.parseInt(gameinfo[3]);
-            this.player_id = Integer.parseInt(gameinfo[4]);
+            this.playerid = Integer.parseInt(gameinfo[4]);
             gamestatus.setText("Your score will be displayed here");
             this.board = new WAMBoard(this.Rows, this.Cols, this.players);
             this.client.board = this.board;
@@ -96,10 +97,10 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         {
             for(int j = 0; j < Cols; j++)
             {
-                int fakeafi = i;
-                int fakeafj = j;
+                int row = i;
+                int col = j;
                 boardarray[i][j] = new Button();
-                boardarray[i][j].setOnAction(e -> client.Whack(fakeafi,fakeafj));
+                boardarray[i][j].setOnAction(e -> client.Whack(row, col));
                 boardarray[i][j].setGraphic(new ImageView(this.MOLE_DOWN));
                 pane.add(boardarray[i][j], j, i);
             }
@@ -142,18 +143,15 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
                 break;
             case GAME_WON:
                 this.gamestatus.setText( "You won. Yay!" );
-                board.close();
                 break;
             case GAME_LOST:
                 this.gamestatus.setText( "You lost. Boo!" );
-                board.close();
                 break;
             case GAME_TIED:
                 this.gamestatus.setText( "Tie game. Meh." );
-                board.close();
                 break;
             case NOT_OVER:
-                this.gamestatus.setText("Score: " + client.ergebnis);
+                this.gamestatus.setText("Score: " + client.score);
                 break;
             default:
                 this.gamestatus.setText(" ");

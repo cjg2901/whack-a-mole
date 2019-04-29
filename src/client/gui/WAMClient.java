@@ -7,7 +7,6 @@ import common.WAMException;
 
 import java.io.*;
 import java.net.*;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import static common.WAMProtocol.*;
@@ -18,6 +17,7 @@ import static java.lang.Math.*;
  * Communicates server messages to the model.
  *
  * @author Craig Gebo
+ * @author Sri Kamal
  */
 public class WAMClient {
 
@@ -33,11 +33,14 @@ public class WAMClient {
     /** the model which keeps track of the game */
     public WAMBoard board;
 
+    /** The request */
     public String[] request1;
 
+    /** The players ID */
     public int playerid;
 
-    public int ergebnis;
+    /** The players score */
+    public int score;
 
     /**
      * Print method that does something only if DEBUG is true
@@ -106,10 +109,9 @@ public class WAMClient {
 
     /**
      * Throws an error and stops the game.
-     * @param arguments
      */
-    public void error( String arguments ) {
-        this.board.error( arguments );
+    public void error() {
+        this.board.error();
         this.stop();
     }
 
@@ -166,11 +168,8 @@ public class WAMClient {
     {
         try {
             this.clientSocket.close();
-            this.board.close();
         }
-        catch( IOException ioe ) {
-            // squash
-        }
+        catch( IOException ioe ) {}
     }
 
 
@@ -192,7 +191,7 @@ public class WAMClient {
                         this.moleDown( tokens[1] );
                         break;
                     case ERROR:
-                        error( tokens[1] );
+                        error();
                         break;
                     case SCORE:
                         updateScore(tokens[playerid+1]);
@@ -214,15 +213,9 @@ public class WAMClient {
                         this.stop();
                         break;
                 }
-            }
-
-            catch( NoSuchElementException nse ) {
+            } catch( Exception e ) {
                 // Looks like the connection shut down.
-                this.error( "Lost connection to server." );
-                this.stop();
-            }
-            catch( Exception e ) {
-                this.error( e.getMessage() + '?' );
+                this.error();
                 this.stop();
             }
         }
@@ -233,23 +226,23 @@ public class WAMClient {
 
     /**
      * Whack message sends that a mole was whacked by player
-     * @param fakeafi
-     * @param fakeafj
+     * @param row the row
+     * @param col the column
      */
-    public void Whack(int fakeafi, int fakeafj)
+    public void Whack(int row, int col)
     {
-        int moleid = (((fakeafi)*board.COLS))+(fakeafj);
+        int moleid = (((row)*board.COLS))+(col);
         this.networkOut.println(WHACK + " " + moleid + " " + this.playerid);
     }
 
     /**
      * updates the score on the gui
-     * @param score
+     * @param score the new score
      */
     public void updateScore(String score)
     {
-        int wertung = Integer.parseInt(score);
-        this.ergebnis = wertung;
+        int newScore = Integer.parseInt(score);
+        this.score = newScore;
     }
 
     /**
