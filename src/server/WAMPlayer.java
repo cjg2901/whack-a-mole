@@ -179,7 +179,7 @@ public class WAMPlayer implements Closeable, Runnable {
                 System.out.println(request);
                 if (tokens[0].equals(WHACK))
                 {
-                    if (game.getGame().isMoleUP(Integer.parseInt(tokens[1])))
+                    if (game.getGame().isMoleUp(Integer.parseInt(tokens[1])))
                     {
                         this.score += 2;
                         for (WAMPlayer player:players)

@@ -1,30 +1,41 @@
 package server;
 
-import client.gui.WAMBoard;
-
-import static common.WAMProtocol.*;
 import static java.lang.Math.floor;
 
+/**
+ *
+ */
 public class WAM
 {
+    /**  */
     private int ROWS;
+    /**  */
     private int COLS;
+    /**  */
     private Mole[][] board;
+    /**  */
     private WAMPlayer[] players;
-    private WAMBoard.Status status;
 
+    /**
+     *
+     */
     private enum Mole
     {
         MOLE_UP, MOLE_DOWN
     }
 
+    /**
+     *
+     * @param rows
+     * @param cols
+     * @param players
+     */
     public WAM(int rows, int cols, WAMPlayer[] players)
     {
         this.ROWS = rows;
         this.COLS = cols;
         this.board = new Mole[rows][cols];
         this.players = players;
-        this.status = WAMBoard.Status.NOT_OVER;
 
         for(int col=0; col<COLS; col++)
         {
@@ -35,7 +46,12 @@ public class WAM
         }
     }
 
-    public boolean isMoleUP(int moleID)
+    /**
+     *
+     * @param moleID
+     * @return
+     */
+    public boolean isMoleUp(int moleID)
     {
         int row = (int) floor((double) moleID / (double) COLS) ;
         System.out.println(row);
@@ -44,25 +60,39 @@ public class WAM
         return (board[row][col].equals(Mole.MOLE_UP));
     }
 
-    public int getRows() {
-        return this.ROWS;
-    }
-
+    /**
+     *
+     * @return
+     */
     public int getCols() {
         return this.COLS;
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     */
     public void moleUp(int row, int col)
     {
         this.board[row-1][col-1] = Mole.MOLE_UP;
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     */
     public void moleDown(int row, int col)
     {
         this.board[row-1][col-1] = Mole.MOLE_DOWN;
     }
 
-    public WAMPlayer hasWON()
+    /**
+     *
+     * @return
+     */
+    public WAMPlayer hasWon()
     {
         int highscore = 0;
         for (WAMPlayer current:players)
@@ -82,6 +112,10 @@ public class WAM
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean hasTied()
     {
         int highscore = 0;
@@ -98,18 +132,4 @@ public class WAM
         }
         return false;
     }
-
-//    public void WhackDetected()
-//    {
-//        String message = scanner.nextLine();
-//        String[] messagelist = message.split(" ");
-//        switch (messagelist[0])
-//        {
-//            case WHACK:
-//                printer.println(MOLE_DOWN + messagelist[1]);
-//                this.score += 2;
-//            default:
-//                printer.println(ERROR);
-//        }
-//    }
 }
