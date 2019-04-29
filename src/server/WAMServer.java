@@ -91,7 +91,6 @@ public class WAMServer implements Runnable{
             {
                 player.setgame(game);
             }
-            // server is not multithreaded
             new Thread(game).start();
         } catch (IOException e) {
             System.err.println("Something has gone horribly wrong!");

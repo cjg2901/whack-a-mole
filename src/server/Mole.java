@@ -50,7 +50,7 @@ public class Mole extends Thread {
         while (gameRunning) {
             try {
                 Random random = new Random();
-                sleep(random.nextInt(10000));
+                sleep(random.nextInt(8000) + 2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -62,7 +62,8 @@ public class Mole extends Thread {
             }
 
             try {
-                sleep(5000);
+                Random random = new Random();
+                sleep(random.nextInt(3000) + 2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
