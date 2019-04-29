@@ -150,7 +150,7 @@ public class WAMBoard
         alertObservers();
     }
 
-    public void Error(String arguments)
+    public void error(String arguments)
     {
         this.status = Status.ERROR;
         alertObservers();
