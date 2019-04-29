@@ -1,12 +1,10 @@
 package server;
 
-import common.WAMException;
-
 /**
  * Represents the entire game on the server side.
  *
- * @author Craig Gebo @ cjg2901@rit.edu
- * @author srikamal @kvc9128@g.rit.edu
+ * @author Craig Gebo
+ * @author Sri Kamal
  */
 
 public class WAMGame implements Runnable {
@@ -43,6 +41,11 @@ public class WAMGame implements Runnable {
         this.game = new WAM(rows, cols, players);
     }
 
+    /**
+     * Gets the WAM class which represents the game.
+     *
+     * @return the game
+     */
     public WAM getGame()
     {
         return this.game;
@@ -67,10 +70,7 @@ public class WAMGame implements Runnable {
                 ie.printStackTrace();
             }
         }
-        try { GameStat(); }
-        catch(WAMException wame) {
-            wame.printStackTrace();
-        }
+        gameStatus();
         System.out.println("Game over");
         for (Mole mole : moles) {
             mole.stopGame();
@@ -82,27 +82,27 @@ public class WAMGame implements Runnable {
     }
 
     /**
-     *
-     * @throws WAMException
+     * Checks the final status of the game, which player won and
+     * which has lost or if there was a tie.
      */
-    public void GameStat() throws WAMException
+    public void gameStatus()
     {
         if (game.hasTied())
         {
-            for (WAMPlayer player:players)
+            for (WAMPlayer player : players)
             {
                 player.gameTied();
             }
         }
         else
         {
-            WAMPlayer player = game.hasWON();
+            WAMPlayer player = game.hasWon();
             player.gameWon();
-            for (WAMPlayer other_player: players)
+            for (WAMPlayer otherPlayer: players)
             {
-                if(other_player != player)
+                if(otherPlayer != player)
                 {
-                    other_player.gameLost();
+                    otherPlayer.gameLost();
                 }
             }
         }
