@@ -199,15 +199,15 @@ public class WAMClient {
                         break;
                     case GAME_LOST:
                         gameLost();
-                        close();
+                        this.go = false;
                         break;
                     case GAME_TIED:
                         gameTied();
-                        close();
+                        this.go = false;
                         break;
                     case GAME_WON:
                         gameWon();
-                        close();
+                        this.go = false;
                         break;
                     default:
                         System.err.println("Unrecognized request: " + request);

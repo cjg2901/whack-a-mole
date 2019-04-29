@@ -68,20 +68,6 @@ public class WAMBoard
     public enum Status
     {
         NOT_OVER, GAME_WON, GAME_LOST, GAME_TIED, ERROR;
-
-        private String message = null;
-
-        public void setMessage(String msg)
-        {
-            this.message = msg;
-        }
-
-        @Override
-        public String toString()
-        {
-            super.toString();
-            return '(' + this.message + ')';
-        }
     }
 
     /**
@@ -116,7 +102,7 @@ public class WAMBoard
      */
     public void close()
     {
-        alertObservers();
+        //alertObservers();
     }
 
     /**
@@ -177,7 +163,6 @@ public class WAMBoard
     public void Error(String arguments)
     {
         this.status = Status.ERROR;
-        this.status.setMessage(arguments);
         alertObservers();
     }
 
