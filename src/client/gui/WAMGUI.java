@@ -35,7 +35,6 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
     private WAMBoard board;
     private Image MOLE_DOWN;
     private Image MOLE_UP;
-    private Image Background;
     private WAMClient client;
     Label gamestatus = new Label();
     VBox boxyMcboxface = new VBox();
@@ -61,8 +60,6 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
 
             this.MOLE_DOWN = new Image("client/gui/WAM-logo.png");
             this.MOLE_UP = new Image("client/gui/WAM-mole.png");
-            this.Background = new Image("client/gui/WAM-bg.png");
-
             this.client = new WAMClient(host, port, this.board);
             String[] gameinfo = client.request1;
             this.Rows = Integer.parseInt(gameinfo[1]);
