@@ -96,10 +96,10 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         {
             for(int j = 0; j < Cols; j++)
             {
-                int fake_af_i = i;
-                int fake_af_j = j;
+                int fakeafi = i;
+                int fakeafj = j;
                 boardarray[i][j] = new Button();
-                boardarray[i][j].setOnAction(e -> client.Whack(fake_af_i,fake_af_j));
+                boardarray[i][j].setOnAction(e -> client.Whack(fakeafi,fakeafj));
                 boardarray[i][j].setGraphic(new ImageView(this.MOLE_DOWN));
                 pane.add(boardarray[i][j], j, i);
             }

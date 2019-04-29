@@ -35,7 +35,7 @@ public class WAMClient {
 
     public String[] request1;
 
-    public int player_id;
+    public int playerid;
 
     public int ergebnis;
 
@@ -90,7 +90,7 @@ public class WAMClient {
             //block waiting for welcome message from server
             String request = this.networkIn.nextLine();
             request1 = request.split(" ");
-            player_id = Integer.parseInt(request1[request1.length-1]);
+            playerid = Integer.parseInt(request1[request1.length-1]);
             if(!request1[0].equals(WELCOME))
             {
                 throw new WAMException("Expected WELCOME from server");
@@ -109,7 +109,7 @@ public class WAMClient {
      * @param arguments
      */
     public void error( String arguments ) {
-        this.board.Error( arguments );
+        this.board.error( arguments );
         this.stop();
     }
 
@@ -195,7 +195,7 @@ public class WAMClient {
                         error( tokens[1] );
                         break;
                     case SCORE:
-                        updateScore(tokens[player_id+1]);
+                        updateScore(tokens[playerid+1]);
                         break;
                     case GAME_LOST:
                         gameLost();
@@ -231,10 +231,10 @@ public class WAMClient {
     }
 
 
-    public void Whack(int fake_af_i, int fake_af_j)
+    public void Whack(int fakeafi, int fakeafj)
     {
-        int moleid = (((fake_af_i)*board.COLS))+(fake_af_j);
-        this.networkOut.println(WHACK + " " + moleid + " " + this.player_id);
+        int moleid = (((fakeafi)*board.COLS))+(fakeafj);
+        this.networkOut.println(WHACK + " " + moleid + " " + this.playerid);
     }
 
     public void updateScore(String score)
