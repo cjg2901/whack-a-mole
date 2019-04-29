@@ -231,12 +231,21 @@ public class WAMClient {
     }
 
 
+    /**
+     * Whack message sends that a mole was whacked by player
+     * @param fakeafi
+     * @param fakeafj
+     */
     public void Whack(int fakeafi, int fakeafj)
     {
         int moleid = (((fakeafi)*board.COLS))+(fakeafj);
         this.networkOut.println(WHACK + " " + moleid + " " + this.playerid);
     }
 
+    /**
+     * updates the score on the gui
+     * @param score
+     */
     public void updateScore(String score)
     {
         int wertung = Integer.parseInt(score);
