@@ -99,17 +99,4 @@ public class WAM
         return false;
     }
 
-//    public void WhackDetected()
-//    {
-//        String message = scanner.nextLine();
-//        String[] messagelist = message.split(" ");
-//        switch (messagelist[0])
-//        {
-//            case WHACK:
-//                printer.println(MOLE_DOWN + messagelist[1]);
-//                this.score += 2;
-//            default:
-//                printer.println(ERROR);
-//        }
-//    }
 }
