@@ -67,7 +67,7 @@ public class WAMBoard
      */
     public enum Status
     {
-        NOT_OVER, I_WON, I_LOST, TIE, ERROR;
+        NOT_OVER, GAME_WON, GAME_LOST, GAME_TIED, ERROR;
 
         private String message = null;
 
@@ -124,7 +124,7 @@ public class WAMBoard
      */
     public void gameWon()
     {
-        this.status = Status.I_WON;
+        this.status = Status.GAME_WON;
         alertObservers();
     }
 
@@ -133,7 +133,7 @@ public class WAMBoard
      */
     public void gameLost()
     {
-        this.status = Status.I_LOST;
+        this.status = Status.GAME_LOST;
         alertObservers();
     }
 
@@ -142,7 +142,7 @@ public class WAMBoard
      */
     public void gameTied()
     {
-        this.status = Status.TIE;
+        this.status = Status.GAME_TIED;
         alertObservers();
     }
 

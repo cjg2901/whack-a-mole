@@ -137,20 +137,20 @@ public class WAMGUI extends Application implements Observer<WAMBoard>
         WAMBoard.Status status = board.getStatus();
         switch (status)
         {
-//            case ERROR:
-//                this.gamestatus.setText(status.toString());
-//                break;
-            case I_WON:
+            case ERROR:
+                this.gamestatus.setText(status.toString());
+                break;
+            case GAME_WON:
                 this.gamestatus.setText( "You won. Yay!" );
-                this.stop();
+                board.close();
                 break;
-            case I_LOST:
+            case GAME_LOST:
                 this.gamestatus.setText( "You lost. Boo!" );
-                this.stop();
+                board.close();
                 break;
-            case TIE:
+            case GAME_TIED:
                 this.gamestatus.setText( "Tie game. Meh." );
-                this.stop();
+                board.close();
                 break;
             case NOT_OVER:
                 this.gamestatus.setText("Score: " + client.ergebnis);

@@ -204,7 +204,7 @@ public class WAMPlayer implements Closeable, Runnable {
             }
         } catch (NoSuchElementException nse)
         {
-            nse.printStackTrace();
+            //nse.printStackTrace();
         }
     }
 }
